@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAgrupamentohasFraseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateAgrupamentohasFraseLabel_idAssociacao}" for="idAssociacao" />
+                    <h:inputText id="idAssociacao" value="#{agrupamentohasFraseController.selected.idAssociacao}" title="#{bundle.CreateAgrupamentohasFraseTitle_idAssociacao}" required="true" requiredMessage="#{bundle.CreateAgrupamentohasFraseRequiredMessage_idAssociacao}"/>
+                    <h:outputLabel value="#{bundle.CreateAgrupamentohasFraseLabel_dataCriacao}" for="dataCriacao" />
+                    <h:inputText id="dataCriacao" value="#{agrupamentohasFraseController.selected.dataCriacao}" title="#{bundle.CreateAgrupamentohasFraseTitle_dataCriacao}" required="true" requiredMessage="#{bundle.CreateAgrupamentohasFraseRequiredMessage_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateAgrupamentohasFraseLabel_agrupamento}" for="agrupamento" />
+                    <h:selectOneMenu id="agrupamento" value="#{agrupamentohasFraseController.selected.agrupamento}" title="#{bundle.CreateAgrupamentohasFraseTitle_agrupamento}" required="true" requiredMessage="#{bundle.CreateAgrupamentohasFraseRequiredMessage_agrupamento}">
+                        <f:selectItems value="#{agrupamentoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateAgrupamentohasFraseLabel_frase}" for="frase" />
+                    <h:selectOneMenu id="frase" value="#{agrupamentohasFraseController.selected.frase}" title="#{bundle.CreateAgrupamentohasFraseTitle_frase}" required="true" requiredMessage="#{bundle.CreateAgrupamentohasFraseRequiredMessage_frase}">
+                        <f:selectItems value="#{fraseController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateAgrupamentohasFraseLabel_utilizadoridUtilizador}" for="utilizadoridUtilizador" />
+                    <h:selectOneMenu id="utilizadoridUtilizador" value="#{agrupamentohasFraseController.selected.utilizadoridUtilizador}" title="#{bundle.CreateAgrupamentohasFraseTitle_utilizadoridUtilizador}" required="true" requiredMessage="#{bundle.CreateAgrupamentohasFraseRequiredMessage_utilizadoridUtilizador}">
+                        <f:selectItems value="#{utilizadorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{agrupamentohasFraseController.create}" value="#{bundle.CreateAgrupamentohasFraseSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{agrupamentohasFraseController.prepareList}" value="#{bundle.CreateAgrupamentohasFraseShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAgrupamentohasFraseIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

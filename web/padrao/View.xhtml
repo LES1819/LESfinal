@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPadraoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <br />
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPadraoLabel_idPadrao}"/>
+                    <h:outputText value="#{padraoController.selected.idPadrao}" title="#{bundle.ViewPadraoTitle_idPadrao}"/>
+                    <h:outputText value="#{bundle.ViewPadraoLabel_nome}"/>
+                    <h:outputText value="#{padraoController.selected.nome}" title="#{bundle.ViewPadraoTitle_nome}"/>
+                    <h:outputText value="#{bundle.ListPadraoTitle_img}"/>
+                    <h:graphicImage value="#{padraoController.selected.img}" width="200px" height="200px"/>
+                    <h:outputText value="#{bundle.ViewPadraoLabel_descricao}"/>
+                    <h:outputText value="#{padraoController.selected.descricao}" title="#{bundle.ViewPadraoTitle_descricao}"/>
+                    <h:outputText value="#{bundle.ViewPadraoLabel_dataCriacao}"/>
+                    <h:outputText value="#{padraoController.selected.dataCriacao}" title="#{bundle.ViewPadraoTitle_dataCriacao}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewPadraoLabel_utilizadoridUtilizador}"/>
+                    <h:outputText value="#{padraoController.selected.utilizadoridUtilizador}" title="#{bundle.ViewPadraoTitle_utilizadoridUtilizador}"/>
+                </h:panelGrid>
+                <br />
+                <h:outputText value="#{bundle.AssociatedAgrupamentos}" style="font-weight: bold; font-size: 120%"/>
+                <br />
+                
+                <h:dataTable value="#{padraoController.agrupamentos}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAgrupamentoTitle_nome}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAgrupamentoTitle_descricao}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descricao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAgrupamentoTitle_dataCriacao}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dataCriacao}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                            <h:commandLink action="#{agrupamentoController.desassociateAgrupamento(padraoController.selected, item)}" value="Desassociar Agrupamento"/>
+                    </h:column>
+                </h:dataTable>
+                
+                
+                
+                <br />
+                <h:outputText value="#{bundle.AssociatedAtividades}" style="font-weight: bold; font-size: 120%"/>
+                <br />
+                <h:dataTable value="#{padraoController.atividades}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAtividadeTitle_nome}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAtividadeTitle_descricao}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descricao}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListAtividadeTitle_dataCriacao}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dataCriacao}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                            <h:commandLink action="#{atividadeController.desassociateAtividade(padraoController.selected, item)}" value="Desassociar Atividade"/>
+                    </h:column>
+                </h:dataTable>
+                
+                
+                
+                <br />
+                <h:commandButton class="check btn btn-danger" action="#{padraoController.destroyAndView}" value="Apagar"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPadraoEditLink}"/>
+                <br />
+                <h:commandLink action="#{padraoController.prepareCreate}" value="#{bundle.ViewPadraoCreateLink}" />
+                <br />
+                <h:commandLink action="#{padraoController.prepareList}" value="#{bundle.ViewPadraoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPadraoIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

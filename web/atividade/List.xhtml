@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAtividadeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <br/>
+            <div class="row">
+                <h:outputText value="Lista de Atividades"/>
+            </div>
+
+            <h:form styleClass="jsfcrux\d_list_form">
+
+                <div class="btn-group right">
+                    <h:commandButton class="check btn btn-primary" action="#{atividadeController.prepareCreate}" value="Criar"/>
+
+                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="false"><span>Apagar</span></button>
+
+                </div> 
+                <br />
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+
+                <div>
+                    <table id="example" class="display">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="no-sort" data-index="0">
+
+                                    <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                                </th>
+                                <th data-index="1">Nome</th>
+                                <th data-index="2">Descrição</th>
+                                <th data-index="3">Criado por</th>
+                                <th data-index="4">Data de criação</th>
+                                <th class="no-sort" data-index="5">Associar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{atividadeController.items}" var="item">
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{atividadeController.selectedItems[item]}"/>
+                                    </td>
+                                    <td>
+                                        #{item.nome} <h:commandLink action="#{atividadeController.prepareView}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{atividadeController.prepareEdit}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                    </td>
+                                    <td>
+                                        #{item.descricao}
+                                    </td>
+                                    <td>
+                                        #{item.utilizadoridUtilizador.nome}
+                                    </td>
+                                    <td>
+                                        #{produtoController.dateToString(item.dataCriacao)}
+                                    </td>
+                                    <td>
+                                        <h:commandLink class="check btn btn-outline-success"  action="#{papelController.prepareAssociate(item,0)}"><i class="fas fa-user-tag"></i>&nbsp; Papéis
+                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                        </h:commandLink>
+                                        <h:outputText value=" "/>
+                                        <h:commandLink class="check btn btn-outline-success"  action="#{produtoController.prepareAssociate(item,0)}"><i class="fas fa-book"></i>&nbsp; Produtos
+                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                        </h:commandLink>
+                                        <h:outputText value=" "/>
+                                        <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"> Padrões
+                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">#{bundle.ListaApagarAtividade2}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modalid">#{bundle.ListaApagarAtividade}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <h:commandButton class="btn btn-primary" action="#{atividadeController.destroyActivities()}" value="Apagar"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </h:form>
+
+
+            <h:outputScript library ="javascript" name ="checkboxes.js" />
+            <h:outputScript library ="javascript" name ="filterActivities.js" />
+        </ui:define>
+    </ui:composition>
+</html>

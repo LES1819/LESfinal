@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateProdutohasAtividadeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateProdutohasAtividadeLabel_dataCriacao}" for="dataCriacao" />
+                    <h:inputText id="dataCriacao" value="#{produtohasAtividadeController.selected.dataCriacao}" title="#{bundle.CreateProdutohasAtividadeTitle_dataCriacao}" required="true" requiredMessage="#{bundle.CreateProdutohasAtividadeRequiredMessage_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateProdutohasAtividadeLabel_idAssociacao}" for="idAssociacao" />
+                    <h:inputText id="idAssociacao" value="#{produtohasAtividadeController.selected.idAssociacao}" title="#{bundle.CreateProdutohasAtividadeTitle_idAssociacao}" required="true" requiredMessage="#{bundle.CreateProdutohasAtividadeRequiredMessage_idAssociacao}"/>
+                    <h:outputLabel value="#{bundle.CreateProdutohasAtividadeLabel_atividade}" for="atividade" />
+                    <h:selectOneMenu id="atividade" value="#{produtohasAtividadeController.selected.atividade}" title="#{bundle.CreateProdutohasAtividadeTitle_atividade}" required="true" requiredMessage="#{bundle.CreateProdutohasAtividadeRequiredMessage_atividade}">
+                        <f:selectItems value="#{atividadeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateProdutohasAtividadeLabel_produto}" for="produto" />
+                    <h:selectOneMenu id="produto" value="#{produtohasAtividadeController.selected.produto}" title="#{bundle.CreateProdutohasAtividadeTitle_produto}" required="true" requiredMessage="#{bundle.CreateProdutohasAtividadeRequiredMessage_produto}">
+                        <f:selectItems value="#{produtoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateProdutohasAtividadeLabel_utilizadoridUtilizador}" for="utilizadoridUtilizador" />
+                    <h:selectOneMenu id="utilizadoridUtilizador" value="#{produtohasAtividadeController.selected.utilizadoridUtilizador}" title="#{bundle.CreateProdutohasAtividadeTitle_utilizadoridUtilizador}" required="true" requiredMessage="#{bundle.CreateProdutohasAtividadeRequiredMessage_utilizadoridUtilizador}">
+                        <f:selectItems value="#{utilizadorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{produtohasAtividadeController.create}" value="#{bundle.CreateProdutohasAtividadeSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{produtohasAtividadeController.prepareList}" value="#{bundle.CreateProdutohasAtividadeShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateProdutohasAtividadeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

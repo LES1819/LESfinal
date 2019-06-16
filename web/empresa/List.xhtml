@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">Empresa</ui:define>
+
+        <ui:define name="content">
+
+            <h:form>
+                <br>
+                </br>
+                <div class="row">
+                    <h:outputText value="Lista de Empresas"/>
+
+                    <div class="ml-auto" style="">
+                        <h:commandButton class="check btn btn-primary" action="#{empresaController.prepareCreate}" value="Criar"/>
+                        <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+
+
+                    </div>
+                </div>
+
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+
+                <div>
+                    <table id="example" class="display">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="no-sort" data-index="0">
+
+                                    <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                                </th>
+
+                                <th data-index="1">Nif</th>
+                                <th data-index="2">Nome</th>
+                                <th data-index="3">Data de Criação</th>
+                                <th class="no-sort" data-index="4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{empresaController.items}" var="item">
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <h:selectBooleanCheckbox class="check[]" onclick="toggleproduto()" />
+                                    </td>
+                                    <td>
+                                        #{item.nif}
+                                    </td>
+                                    <td>
+                                        #{item.nome}
+                                    </td>
+                                    <td>
+                                        #{item.dataCriacao}
+                                    </td>
+                                    <td><h:commandLink action="#{empresaController.prepareView}" value="#{bundle.ListEmpresaViewLink}"/>
+                                        <h:outputText value=" "/>
+                                        <h:commandLink action="#{empresaController.prepareEdit}" value="#{bundle.ListEmpresaEditLink}"/>
+                                        <h:outputText value=" "/>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPermissoesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPermissoesLabel_idPermissoes}" for="idPermissoes" />
+                    <h:inputText id="idPermissoes" value="#{permissoesController.selected.idPermissoes}" title="#{bundle.EditPermissoesTitle_idPermissoes}" required="true" requiredMessage="#{bundle.EditPermissoesRequiredMessage_idPermissoes}"/>
+                    <h:outputLabel value="#{bundle.EditPermissoesLabel_mascara}" for="mascara" />
+                    <h:inputText id="mascara" value="#{permissoesController.selected.mascara}" title="#{bundle.EditPermissoesTitle_mascara}" />
+                    <h:outputLabel value="#{bundle.EditPermissoesLabel_tema}" for="tema" />
+                    <h:inputText id="tema" value="#{permissoesController.selected.tema}" title="#{bundle.EditPermissoesTitle_tema}" />
+                    <h:outputLabel value="#{bundle.EditPermissoesLabel_dataCriacao}" for="dataCriacao" />
+                    <h:inputText id="dataCriacao" value="#{permissoesController.selected.dataCriacao}" title="#{bundle.EditPermissoesTitle_dataCriacao}" required="true" requiredMessage="#{bundle.EditPermissoesRequiredMessage_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandLink action="#{permissoesController.update}" value="#{bundle.EditPermissoesSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPermissoesViewLink}"/>
+                <br />
+                <h:commandLink action="#{permissoesController.prepareList}" value="#{bundle.EditPermissoesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPermissoesIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

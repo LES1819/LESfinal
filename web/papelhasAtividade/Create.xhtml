@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePapelhasAtividadeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePapelhasAtividadeLabel_dataCriacao}" for="dataCriacao" />
+                    <h:inputText id="dataCriacao" value="#{papelhasAtividadeController.selected.dataCriacao}" title="#{bundle.CreatePapelhasAtividadeTitle_dataCriacao}" required="true" requiredMessage="#{bundle.CreatePapelhasAtividadeRequiredMessage_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreatePapelhasAtividadeLabel_idAssociacao}" for="idAssociacao" />
+                    <h:inputText id="idAssociacao" value="#{papelhasAtividadeController.selected.idAssociacao}" title="#{bundle.CreatePapelhasAtividadeTitle_idAssociacao}" required="true" requiredMessage="#{bundle.CreatePapelhasAtividadeRequiredMessage_idAssociacao}"/>
+                    <h:outputLabel value="#{bundle.CreatePapelhasAtividadeLabel_atividade}" for="atividade" />
+                    <h:selectOneMenu id="atividade" value="#{papelhasAtividadeController.selected.atividade}" title="#{bundle.CreatePapelhasAtividadeTitle_atividade}" required="true" requiredMessage="#{bundle.CreatePapelhasAtividadeRequiredMessage_atividade}">
+                        <f:selectItems value="#{atividadeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreatePapelhasAtividadeLabel_papel}" for="papel" />
+                    <h:selectOneMenu id="papel" value="#{papelhasAtividadeController.selected.papel}" title="#{bundle.CreatePapelhasAtividadeTitle_papel}" required="true" requiredMessage="#{bundle.CreatePapelhasAtividadeRequiredMessage_papel}">
+                        <f:selectItems value="#{papelController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreatePapelhasAtividadeLabel_utilizadoridUtilizador}" for="utilizadoridUtilizador" />
+                    <h:selectOneMenu id="utilizadoridUtilizador" value="#{papelhasAtividadeController.selected.utilizadoridUtilizador}" title="#{bundle.CreatePapelhasAtividadeTitle_utilizadoridUtilizador}" required="true" requiredMessage="#{bundle.CreatePapelhasAtividadeRequiredMessage_utilizadoridUtilizador}">
+                        <f:selectItems value="#{utilizadorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{papelhasAtividadeController.create}" value="#{bundle.CreatePapelhasAtividadeSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{papelhasAtividadeController.prepareList}" value="#{bundle.CreatePapelhasAtividadeShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePapelhasAtividadeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

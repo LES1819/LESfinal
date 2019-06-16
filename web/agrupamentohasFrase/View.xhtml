@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAgrupamentohasFraseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAgrupamentohasFraseLabel_idAssociacao}"/>
+                    <h:outputText value="#{agrupamentohasFraseController.selected.idAssociacao}" title="#{bundle.ViewAgrupamentohasFraseTitle_idAssociacao}"/>
+                    <h:outputText value="#{bundle.ViewAgrupamentohasFraseLabel_dataCriacao}"/>
+                    <h:outputText value="#{agrupamentohasFraseController.selected.dataCriacao}" title="#{bundle.ViewAgrupamentohasFraseTitle_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewAgrupamentohasFraseLabel_agrupamento}"/>
+                    <h:outputText value="#{agrupamentohasFraseController.selected.agrupamento}" title="#{bundle.ViewAgrupamentohasFraseTitle_agrupamento}"/>
+                    <h:outputText value="#{bundle.ViewAgrupamentohasFraseLabel_frase}"/>
+                    <h:outputText value="#{agrupamentohasFraseController.selected.frase}" title="#{bundle.ViewAgrupamentohasFraseTitle_frase}"/>
+                    <h:outputText value="#{bundle.ViewAgrupamentohasFraseLabel_utilizadoridUtilizador}"/>
+                    <h:outputText value="#{agrupamentohasFraseController.selected.utilizadoridUtilizador}" title="#{bundle.ViewAgrupamentohasFraseTitle_utilizadoridUtilizador}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{agrupamentohasFraseController.destroyAndView}" value="#{bundle.ViewAgrupamentohasFraseDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewAgrupamentohasFraseEditLink}"/>
+                <br />
+                <h:commandLink action="#{agrupamentohasFraseController.prepareCreate}" value="#{bundle.ViewAgrupamentohasFraseCreateLink}" />
+                <br />
+                <h:commandLink action="#{agrupamentohasFraseController.prepareList}" value="#{bundle.ViewAgrupamentohasFraseShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewAgrupamentohasFraseIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

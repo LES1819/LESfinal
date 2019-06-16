@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAgrupamentoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListAgrupamentoEmpty}" rendered="#{agrupamentoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{agrupamentoController.items.rowCount > 0}">
+                    <h:outputText value="#{agrupamentoController.pagination.pageFirstItem + 1}..#{agrupamentoController.pagination.pageLastItem + 1}/#{agrupamentoController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{agrupamentoController.previous}" value="#{bundle.Previous} #{agrupamentoController.pagination.pageSize}" rendered="#{agrupamentoController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{agrupamentoController.next}" value="#{bundle.Next} #{agrupamentoController.pagination.pageSize}" rendered="#{agrupamentoController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{agrupamentoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:selectBooleanCheckbox onclick="toggleAllForPadrao(); enableAssociate();"></h:selectBooleanCheckbox>
+                            </f:facet>                                      
+                            <h:selectBooleanCheckbox class="check[]" onclick="enableAssociate();" value="#{agrupamentoController.selectedItems[item]}"></h:selectBooleanCheckbox>
+                        </h:column>
+
+                        <!--<h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAgrupamentoTitle_idAgrupamento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idAgrupamento}"/>
+                        </h:column>-->
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAgrupamentoTitle_nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nome}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAgrupamentoTitle_descricao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descricao}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAgrupamentoTitle_dataCriacao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dataCriacao}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <!--<h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAgrupamentoTitle_utilizadoridUtilizador}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.utilizadoridUtilizador}"/>
+                        </h:column>-->
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                
+                <h:commandButton action="#{agrupamentoController.associateAllAgrupamentos()}" disabled="false" type="submit" class="btn btn-primary" value="#{bundle.AssociateAllAgrups}"></h:commandButton>
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListAgrupamentoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

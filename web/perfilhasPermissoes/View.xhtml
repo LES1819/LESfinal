@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPerfilhasPermissoesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPerfilhasPermissoesLabel_idAssociacao}"/>
+                    <h:outputText value="#{perfilhasPermissoesController.selected.idAssociacao}" title="#{bundle.ViewPerfilhasPermissoesTitle_idAssociacao}"/>
+                    <h:outputText value="#{bundle.ViewPerfilhasPermissoesLabel_dataCriacao}"/>
+                    <h:outputText value="#{perfilhasPermissoesController.selected.dataCriacao}" title="#{bundle.ViewPerfilhasPermissoesTitle_dataCriacao}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewPerfilhasPermissoesLabel_perfil}"/>
+                    <h:outputText value="#{perfilhasPermissoesController.selected.perfil}" title="#{bundle.ViewPerfilhasPermissoesTitle_perfil}"/>
+                    <h:outputText value="#{bundle.ViewPerfilhasPermissoesLabel_permissoes}"/>
+                    <h:outputText value="#{perfilhasPermissoesController.selected.permissoes}" title="#{bundle.ViewPerfilhasPermissoesTitle_permissoes}"/>
+                    <h:outputText value="#{bundle.ViewPerfilhasPermissoesLabel_utilizadoridUtilizador}"/>
+                    <h:outputText value="#{perfilhasPermissoesController.selected.utilizadoridUtilizador}" title="#{bundle.ViewPerfilhasPermissoesTitle_utilizadoridUtilizador}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{perfilhasPermissoesController.destroyAndView}" value="#{bundle.ViewPerfilhasPermissoesDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPerfilhasPermissoesEditLink}"/>
+                <br />
+                <h:commandLink action="#{perfilhasPermissoesController.prepareCreate}" value="#{bundle.ViewPerfilhasPermissoesCreateLink}" />
+                <br />
+                <h:commandLink action="#{perfilhasPermissoesController.prepareList}" value="#{bundle.ViewPerfilhasPermissoesShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPerfilhasPermissoesIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
