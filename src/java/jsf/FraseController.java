@@ -1,6 +1,6 @@
 package jsf;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+//import com.sun.xml.internal.ws.util.StringUtils;
 import jpa.entities.Frase;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;

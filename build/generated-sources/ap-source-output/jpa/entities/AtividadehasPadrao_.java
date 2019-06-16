@@ -9,7 +9,7 @@ import jpa.entities.AtividadehasPadraoPK;
 import jpa.entities.Padrao;
 import jpa.entities.Utilizador;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T15:56:39")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T17:03:20")
 @StaticMetamodel(AtividadehasPadrao.class)
 public class AtividadehasPadrao_ { 
 

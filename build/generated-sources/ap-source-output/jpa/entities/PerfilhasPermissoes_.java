@@ -9,7 +9,7 @@ import jpa.entities.PerfilhasPermissoesPK;
 import jpa.entities.Permissoes;
 import jpa.entities.Utilizador;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T15:56:39")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T17:03:20")
 @StaticMetamodel(PerfilhasPermissoes.class)
 public class PerfilhasPermissoes_ { 
 

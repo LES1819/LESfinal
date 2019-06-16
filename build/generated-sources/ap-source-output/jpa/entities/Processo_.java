@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import jpa.entities.Atividade;
 import jpa.entities.Utilizador;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T15:56:39")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T17:03:20")
 @StaticMetamodel(Processo.class)
 public class Processo_ { 
 

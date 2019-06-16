@@ -59,7 +59,6 @@
                         <th data-index="3">Tipo</th>
                         <th data-index="4">Utilizador</th>
                         <th data-index="5">Data de criação</th>
-                        <th class="no-sort" data-index="6">Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,8 +81,6 @@
                             </td>
                             <td>
                                 #{produtoController.dateToString(item.dataCriacao)}
-                            </td>
-                            <td><h:commandLink action="#{produtoController.prepareView}" value="#{bundle.ListProdutoViewLink}"/>
                             </td>
                         </tr>
                     </ui:repeat>
