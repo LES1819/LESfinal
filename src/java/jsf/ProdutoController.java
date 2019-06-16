@@ -498,8 +498,8 @@ public class ProdutoController implements Serializable {
         String month = getMonth(dateInString.substring(4, 7));
         String day = "" + dateInString.charAt(8) + dateInString.charAt(9);
         String time = dateInString.substring(11, 19);
-        String finale = year + "/" + month + "/" + day + " " + time;
-        return finale;
+        String finalDate = year + "/" + month + "/" + day + " " + time;
+        return finalDate;
     }
 
     public String getMonth(String month) {

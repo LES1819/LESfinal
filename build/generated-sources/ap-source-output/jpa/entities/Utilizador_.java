@@ -21,7 +21,7 @@ import jpa.entities.Processo;
 import jpa.entities.Produto;
 import jpa.entities.ProdutohasAtividade;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T17:03:20")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T22:48:26")
 @StaticMetamodel(Utilizador.class)
 public class Utilizador_ { 
 

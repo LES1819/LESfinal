@@ -359,6 +359,7 @@ public class ProcessoController implements Serializable {
                 }
             }
         } catch (Exception e) {
+            System.out.println("Erro no destroyFull");
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
@@ -385,6 +386,8 @@ public class ProcessoController implements Serializable {
         for (int i = 0; i < processosOnList.size(); i++) {
             destroyProcesso(processosOnList.get(i));
         }
+        System.out.println(selectedItems);
+        
         selectedItems = new HashMap<>();
         processosOnList = new ArrayList<>();
         checked = false;

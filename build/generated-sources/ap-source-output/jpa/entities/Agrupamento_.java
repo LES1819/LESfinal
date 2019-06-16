@@ -9,7 +9,7 @@ import jpa.entities.AgrupamentohasFrase;
 import jpa.entities.AgrupamentohasPadrao;
 import jpa.entities.Utilizador;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T17:03:20")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-16T22:48:26")
 @StaticMetamodel(Agrupamento.class)
 public class Agrupamento_ { 
 

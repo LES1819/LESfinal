@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="../template.xhtml">
@@ -74,7 +73,7 @@
                                             <f:actionListener binding="#{atividadeController.viewAux()}" />
                                         </h:commandLink>
                                         <h:outputText value=" "/>
-                                        <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"> Padrões
+                                        <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"><i class="fas fa-project-diagram"></i>&nbsp;  Padrões
                                             <f:actionListener binding="#{atividadeController.viewAux()}" />
                                         </h:commandLink>
                                     </td>
