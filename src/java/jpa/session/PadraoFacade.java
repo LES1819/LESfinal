@@ -51,7 +51,7 @@ public class PadraoFacade extends AbstractFacade<Padrao> {
     }
     
     public List pesquisaAgrupamento(int id) {
-        return em.createNamedQuery("AgrupamentohasPadrao.findByPadraoidPadr\u00e3o").setParameter("padraoidPadr\u00e3o", id).getResultList();
+        return em.createNamedQuery("AgrupamentohasPadrao.findByPadraoidPadrao").setParameter("padraoidPadrao", id).getResultList();
     }
     
     public List pesquisaAtividade(int id) {
