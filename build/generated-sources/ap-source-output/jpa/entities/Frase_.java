@@ -11,7 +11,7 @@ import jpa.entities.Sujeito;
 import jpa.entities.Utilizador;
 import jpa.entities.Verbo;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-17T21:53:05")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-17T22:13:29")
 @StaticMetamodel(Frase.class)
 public class Frase_ { 
 

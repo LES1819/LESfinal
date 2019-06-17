@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import jpa.entities.Frase;
 import jpa.entities.VerboPK;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-17T21:53:05")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-06-17T22:13:29")
 @StaticMetamodel(Verbo.class)
 public class Verbo_ { 
 
