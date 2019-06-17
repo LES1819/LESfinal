@@ -35,7 +35,7 @@
 
                             </div>
                         </div>
-                        <h:commandButton type="submit" class="btn btn-primary" value="#{bundle.AssociateAll}" action="#{produtoController.associateAllProducts(1)}" disabled="true"/>                                   
+                        <h:commandLink action="#{produtoController.associateAllProducts(1)}"><button class="btn btn-primary" disabled="true">Associar</button></h:commandLink>                                   
                     </div>                               
                 </div>
                 <br/>
@@ -59,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ui:repeat value="#{produtoController.itemsNotAssociated}" var="item">
+                    <ui:repeat value="#{produtoController.getItemsNotAssociatedemp()}" var="item">
                         <tr>
                             <td style="text-align: center;">
                                 <h:selectBooleanCheckbox class="check[]" onclick="toggle3();" value="#{produtoController.selectedItems[item]}"/>

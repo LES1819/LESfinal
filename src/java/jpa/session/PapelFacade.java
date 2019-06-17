@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import jpa.entities.Atividade;
+import jpa.entities.Empresa;
 import jpa.entities.Papel;
 
 /**
@@ -51,5 +52,16 @@ public class PapelFacade extends AbstractFacade<Papel> {
     public int countRepeated(String n) {
         return alreadyExists(n).size();
     }
+    
+       public List findByName(Empresa empresa, String nome){
+        return em.createNamedQuery("Papel.byname").setParameter("empresa", empresa).setParameter("nome", nome).getResultList();
+    }
 
+       public List findAllemp(Empresa empresa){
+        return em.createNamedQuery("Papel.findAllemp").setParameter("empresa", empresa).getResultList();
+    }
+       
+      public List getNotAssociatedemp(Atividade a, Empresa empresa) {
+        return em.createNamedQuery("Papel.notAssociatedemp").setParameter("atividade", a).setParameter("empresa", empresa).getResultList();
+    }
 }

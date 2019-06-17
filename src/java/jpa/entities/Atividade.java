@@ -39,14 +39,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Atividade.findAll", query = "SELECT a FROM Atividade a"),
     @NamedQuery(name = "Atividade.findByIdAtividades", query = "SELECT a FROM Atividade a WHERE a.idAtividades = :idAtividades"),
     @NamedQuery(name = "Atividade.findOriginal", query = "SELECT a FROM Atividade a WHERE a.processoidProcesso IS NULL AND a.idAtividades NOT IN(SELECT b.idAtividadeOriginal.idAtividades FROM Atividade b WHERE b.processoidProcesso.idProcesso = :param)"),
+    @NamedQuery(name = "Atividade.findOriginalemp", query = "SELECT a FROM Atividade a WHERE a.processoidProcesso IS NULL AND a.idAtividades NOT IN(SELECT b.idAtividadeOriginal.idAtividades FROM Atividade b WHERE b.processoidProcesso.idProcesso = :param) AND a.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid= :empresa)"),
     @NamedQuery(name = "Atividade.alreadyExists", query = "SELECT a FROM Atividade a, Empresa e WHERE a.nome = :nome AND e.id = 1"),
     @NamedQuery(name = "Atividade.getOriginal", query = "SELECT a FROM Atividade a WHERE a.processoidProcesso IS NULL"),
+    @NamedQuery(name = "Atividade.getOriginalemp", query = "SELECT a FROM Atividade a WHERE a.processoidProcesso IS NULL AND a.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid= :empresa)"),
     @NamedQuery(name = "Atividade.isCopy", query = "SELECT a FROM Atividade a WHERE a.idAtividadeOriginal IS NOT NULL AND a.idAtividades = :atividade"),
     @NamedQuery(name = "Atividade.getCopies", query = "SELECT a FROM Atividade a WHERE a.idAtividadeOriginal = :atividade"),
     @NamedQuery(name = "Atividade.setIdOriginalNull", query = "UPDATE Atividade a SET a.idAtividadeOriginal = NULL WHERE a.idAtividadeOriginal = :atividade"),
     @NamedQuery(name = "Atividade.destroyAssociatedProcesso", query = "DELETE FROM Atividade p WHERE p.processoidProcesso = :processo"),
     @NamedQuery(name = "Atividade.destroyCopias", query = "DELETE FROM Atividade a WHERE a.idAtividadeOriginal = :id"),
     @NamedQuery(name = "Atividade.findByNome", query = "SELECT a FROM Atividade a WHERE a.nome = :nome"),
+    @NamedQuery(name = "Atividade.byname", query = "SELECT a FROM Atividade a WHERE a.nome= :nome AND a.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Atividade.findByDescricao", query = "SELECT a FROM Atividade a WHERE a.descricao = :descricao"),
     @NamedQuery(name = "Atividade.findByDataCriacao", query = "SELECT a FROM Atividade a WHERE a.dataCriacao = :dataCriacao")})
 public class Atividade implements Serializable {

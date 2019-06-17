@@ -36,11 +36,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Processo.findAll", query = "SELECT p FROM Processo p"),
+    @NamedQuery(name = "Processo.findAllemp", query = "SELECT p FROM Processo p WHERE p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid= :empresa)"),
     @NamedQuery(name = "Processo.findByIdProcesso", query = "SELECT p FROM Processo p WHERE p.idProcesso = :idProcesso"),
     @NamedQuery(name = "Processo.alreadyExists", query = "SELECT p FROM Processo p, Empresa e WHERE p.nome = :nome AND e.id = 1"),
     @NamedQuery(name = "Processo.associatedAtividade", query = "SELECT a FROM Atividade a WHERE a.processoidProcesso =:processo"),
     @NamedQuery(name = "Processo.findByNome", query = "SELECT p FROM Processo p WHERE p.nome = :nome"),
     @NamedQuery(name = "Processo.findByDescricao", query = "SELECT p FROM Processo p WHERE p.descricao = :descricao"),
+    @NamedQuery(name = "Processo.byname", query = "SELECT p FROM Processo p WHERE p.nome= :nome AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Processo.findByDataCriacao", query = "SELECT p FROM Processo p WHERE p.dataCriacao = :dataCriacao")})
 public class Processo implements Serializable {
 

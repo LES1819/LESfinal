@@ -37,10 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Papel.findAll", query = "SELECT p FROM Papel p"),
+    @NamedQuery(name = "Papel.findAllemp", query = "SELECT p FROM Papel p WHERE p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid= :empresa)"),
     @NamedQuery(name = "Papel.findByIdPapel", query = "SELECT p FROM Papel p WHERE p.idPapel = :idPapel"),
     @NamedQuery(name = "Papel.alreadyExists", query = "SELECT p FROM Papel p, Empresa e WHERE p.nome = :nome AND e.id = 1"),
     @NamedQuery(name = "Papel.notAssociated", query = "SELECT p FROM Papel p WHERE p NOT IN(SELECT a.papel FROM PapelhasAtividade a WHERE a.atividade =:atividade)"),
+    @NamedQuery(name = "Papel.notAssociatedemp", query = "SELECT p FROM Papel p WHERE p NOT IN(SELECT a.papel FROM PapelhasAtividade a WHERE a.atividade =:atividade) AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Papel.destroyAssociatedAtividade", query = "DELETE FROM PapelhasAtividade p WHERE p.papel = :papel"),
+    @NamedQuery(name = "Papel.byname", query = "SELECT p FROM Papel p WHERE p.nome= :nome AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Papel.findByNome", query = "SELECT p FROM Papel p WHERE p.nome = :nome"),
     @NamedQuery(name = "Papel.findByDescricao", query = "SELECT p FROM Papel p WHERE p.descricao = :descricao"),
     @NamedQuery(name = "Papel.findByDataCriacao", query = "SELECT p FROM Papel p WHERE p.dataCriacao = :dataCriacao")})

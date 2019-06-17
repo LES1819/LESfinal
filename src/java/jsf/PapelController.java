@@ -24,10 +24,12 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import jpa.entities.Atividade;
+import jpa.entities.Empresa;
 import jpa.entities.PapelhasAtividade;
 import jpa.entities.PapelhasAtividadePK;
 import jpa.entities.Utilizador;
 import jpa.session.PapelhasAtividadeFacade;
+import jpa.session.UtilizadorFacade;
 
 @Named("papelController")
 @SessionScoped
@@ -243,7 +245,7 @@ public class PapelController implements Serializable {
         recreateModel();
         recreatePagination();
         try {
-            int k = getFacade().countRepeated(current.getNome());
+            int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
             if (!hasSomething(current.getNome())) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
             } else {
@@ -252,9 +254,10 @@ public class PapelController implements Serializable {
                 } else {
                     getFacade().create(current);
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PapelCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("PapelCreated2"));
+                    return prepareList();
                 }
             }
-            return prepareList();
+            return "Create";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -270,7 +273,7 @@ public class PapelController implements Serializable {
                 getFacade().edit(current);
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PapelUpdated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("PapelUpdated2"));
             } else {
-                int k = getFacade().countRepeated(current.getNome());
+                int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
                 if (!hasSomething(current.getNome())) {
                     JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
                     return null;
@@ -443,6 +446,12 @@ public void associate(Papel p) {
         items = getPaginationNotAssociated().createPageDataModel();
         return items;
     }
+    
+    public DataModel getItemsNotAssociatedemp() {
+        items = new ListDataModel(getFacade().getNotAssociatedemp(atividade,utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+    
 
     public void destroyPapel(Papel a) {
         current = a;
@@ -491,8 +500,25 @@ public void associate(Papel p) {
         papersOnList = new ArrayList<>();
     }
     
+    public String view(Papel p) {
+        current = p;
+        return "View";
+    }
+    
+    public String edit(Papel p){
+        current = p;
+        return "Edit";
+    }
+    
+    public DataModel getItemsListemp(){
+        items = new ListDataModel(getFacade().findAllemp(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+    
     private boolean checked = false;
     private boolean checked2 = false;
     private boolean checkedFromView = false;
+    @EJB
+    private UtilizadorFacade utilizadorFacade;
 
 }

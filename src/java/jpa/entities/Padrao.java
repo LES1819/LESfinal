@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Padrao.findAll", query = "SELECT p FROM Padrao p"),
     @NamedQuery(name = "Padrao.findByIdPadrao", query = "SELECT p FROM Padrao p WHERE p.idPadrao = :idPadrao"),
     @NamedQuery(name = "Padrao.notAssociated", query = "SELECT p FROM Padrao p WHERE p NOT IN(SELECT a.padrao FROM AtividadehasPadrao a WHERE a.atividade =:atividade)"),
+    @NamedQuery(name = "Padrao.notAssociatedemp", query = "SELECT p FROM Padrao p WHERE p NOT IN(SELECT a.padrao FROM AtividadehasPadrao a WHERE a.atividade =:atividade) AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Padrao.findByNome", query = "SELECT p FROM Padrao p WHERE p.nome = :nome"),
      @NamedQuery(name = "Padrao.destroyAssociatedAgrups", query ="DELETE FROM AgrupamentohasPadrao p WHERE p.padrao = :padrao"),
     @NamedQuery(name = "Padrao.destroyAssociatedActivs", query ="DELETE FROM AtividadehasPadrao p WHERE p.padrao = :padrao"),

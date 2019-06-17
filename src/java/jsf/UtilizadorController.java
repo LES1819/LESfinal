@@ -203,7 +203,7 @@ public class UtilizadorController implements Serializable {
     private void recreatePagination() {
         pagination = null;
     }
-
+    
     public String next() {
         getPagination().nextPage();
         recreateModel();
@@ -267,5 +267,4 @@ public class UtilizadorController implements Serializable {
         }
 
     }
-
 }

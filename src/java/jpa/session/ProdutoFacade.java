@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import jpa.entities.Atividade;
+import jpa.entities.Empresa;
 import jpa.entities.Produto;
 
 /**
@@ -69,4 +70,15 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
         return "Irá apagar o produto " + product.getNome() + ".";
     }
 
+          public List findByName(Empresa empresa, String nome){
+        return em.createNamedQuery("Produto.byname").setParameter("empresa", empresa).setParameter("nome", nome).getResultList();
+    }
+          
+     public List findAllemp(Empresa empresa){
+        return em.createNamedQuery("Produto.findAllemp").setParameter("empresa", empresa).getResultList();
+    }
+     
+         public List getNotAssociatedemp(Atividade a, Empresa empresa) {
+        return em.createNamedQuery("Produto.notAssociatedemp").setParameter("atividade", a).setParameter("empresa", empresa).getResultList();
+    }
 }

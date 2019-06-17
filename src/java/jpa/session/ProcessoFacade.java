@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import jpa.entities.Empresa;
 import jpa.entities.Processo;
 
 /**
@@ -45,6 +46,14 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
 
     public int countRepeated(String n) {
         return alreadyExists(n).size();
+    }
+    
+    public List findByName(Empresa empresa, String nome){
+        return em.createNamedQuery("Processo.byname").setParameter("empresa", empresa).setParameter("nome", nome).getResultList();
+    }
+    
+    public List findAllemp(Empresa empresa){
+        return em.createNamedQuery("Processo.findAllemp").setParameter("empresa", empresa).getResultList();
     }
 
 }

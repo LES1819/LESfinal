@@ -28,6 +28,7 @@ import jpa.entities.ProdutohasAtividade;
 import jpa.entities.ProdutohasAtividadePK;
 import jpa.entities.Utilizador;
 import jpa.session.ProdutohasAtividadeFacade;
+import jpa.session.UtilizadorFacade;
 
 @Named("produtoController")
 @SessionScoped
@@ -140,6 +141,8 @@ public class ProdutoController implements Serializable {
         items = new ListDataModel(getFacade().findAll());
         return items;
     }
+    
+   
 
     private void recreateModel() {
         items = null;
@@ -238,7 +241,7 @@ public class ProdutoController implements Serializable {
         recreateModel();
         recreatePagination();
         try {
-            int k = getFacade().countRepeated(current.getNome());
+            int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
             if (!hasSomething(current.getNome())) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
             } else {
@@ -247,9 +250,10 @@ public class ProdutoController implements Serializable {
                 } else {
                     getFacade().create(current);
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProdutoCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("ProdutoCreated2"));
+                return prepareList();
                 }
             }
-            return prepareList();
+            return "Create";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -537,8 +541,30 @@ public class ProdutoController implements Serializable {
                 return null;
         }
     }
+    
+    public String view(Produto p) {
+        current = p;
+        return "View";
+    }
+    
+    public String edit(Produto p){
+        current = p;
+        return "Edit";
+    }
+    
+     public DataModel getItemsListemp(){
+        items = new ListDataModel(getFacade().findAllemp(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+     
+     public DataModel getItemsNotAssociatedemp() {
+        items = new ListDataModel(getFacade().getNotAssociatedemp(atividade,utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
 
     private boolean checked = false;
     private boolean checked2 = false;
     private boolean checkedFromView = false;
+    @EJB
+    UtilizadorFacade utilizadorFacade;
 }

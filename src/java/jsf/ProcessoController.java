@@ -37,6 +37,7 @@ import jpa.session.AtividadeFacade;
 import jpa.session.AtividadehasPadraoFacade;
 import jpa.session.PapelhasAtividadeFacade;
 import jpa.session.ProdutohasAtividadeFacade;
+import jpa.session.UtilizadorFacade;
 
 @Named("processoController")
 @SessionScoped
@@ -99,6 +100,8 @@ public class ProcessoController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
+    
+    
 
     public String destroy() {
         current = (Processo) getItems().getRowData();
@@ -235,7 +238,7 @@ public class ProcessoController implements Serializable {
         recreateModel();
         recreatePagination();
         try {
-            int k = getFacade().countRepeated(current.getNome());
+            int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
             if (!hasSomething(current.getNome())) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
             } else {
@@ -244,9 +247,10 @@ public class ProcessoController implements Serializable {
                 } else {
                     getFacade().create(current);
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoCreated2"));
+                    return prepareList();
                 }
             }
-            return prepareList();
+            return "Create";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -262,7 +266,7 @@ public class ProcessoController implements Serializable {
                 getFacade().edit(current);
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoUpdated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoUpdated2"));
             } else {
-                int k = getFacade().countRepeated(current.getNome());
+                int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
                 if (!hasSomething(current.getNome())) {
                     JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
                     return null;
@@ -420,7 +424,22 @@ public class ProcessoController implements Serializable {
     public void viewAux(Processo item) {
         current = item;
     }
+    
+    public String view(Processo p) {
+        current = p;
+        return "View";
+    }
+    
+    public String edit(Processo p){
+        current = p;
+        return "Edit";
+    }
 
+     public DataModel getItemsListemp(){
+        items = new ListDataModel(getFacade().findAllemp(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+    
     @EJB
     private PapelhasAtividadeFacade papelhasatividadeFacade;
     @EJB
@@ -433,4 +452,6 @@ public class ProcessoController implements Serializable {
     private List<Processo> processosOnList;
     private boolean checked = false;
     private boolean checkedFromView = false;
+    @EJB
+    private UtilizadorFacade utilizadorFacade;
 }

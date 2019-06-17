@@ -14,7 +14,6 @@
             <div class="row">
                 <h:outputText value="Lista de Atividades"/>
             </div>
-
             <h:form styleClass="jsfcrux\d_list_form">
 
                 <div class="btn-group right">
@@ -47,7 +46,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ui:repeat value="#{atividadeController.getOriginalAtividadeItems()}" var="item">
+                            <ui:repeat value="#{atividadeController.getOriginalAtividadeItemsemp()}" var="item">
                                 <tr>
                                     <td style="text-align: center;">
                                         <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{atividadeController.selectedItems[item]}"/>

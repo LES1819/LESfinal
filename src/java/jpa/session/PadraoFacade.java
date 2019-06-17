@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import jpa.entities.Atividade;
+import jpa.entities.Empresa;
 import jpa.entities.Padrao;
 
 /**
@@ -51,10 +52,14 @@ public class PadraoFacade extends AbstractFacade<Padrao> {
     }
     
     public List pesquisaAgrupamento(int id) {
-        return em.createNamedQuery("AgrupamentohasPadrao.findByPadraoidPadr\u00e3o").setParameter("padraoidPadr\u00e3o", id).getResultList();
+        return em.createNamedQuery("AgrupamentohasPadrao.findByPadraoidPadrao").setParameter("padraoidPadrao", id).getResultList();
     }
     
     public List pesquisaAtividade(int id) {
         return em.createNamedQuery("AtividadehasPadrao.findByPadraoidPadrao").setParameter("padraoidPadrao", id).getResultList();
+    }
+    
+    public List getNotAssociatedemp(Atividade a, Empresa empresa) {
+        return em.createNamedQuery("Padrao.notAssociatedemp").setParameter("atividade", a).setParameter("empresa", empresa).getResultList();
     }
 }

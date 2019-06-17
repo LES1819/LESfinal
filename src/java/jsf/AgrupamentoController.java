@@ -1,4 +1,4 @@
-package jsf;
+    package jsf;
 
 import static com.journaldev.jsf.util.SessionUtils.getUserId;
 import jpa.entities.Agrupamento;
@@ -477,5 +477,10 @@ public class AgrupamentoController implements Serializable {
         }
         
         return "View";
+    }
+    
+        public String viewAgrupamento(Agrupamento agrupamento) {
+        current = agrupamento;
+        return "/agrupamento/View";
     }
 }

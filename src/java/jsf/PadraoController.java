@@ -32,6 +32,7 @@ import jpa.entities.AtividadehasPadrao;
 import jpa.entities.AtividadehasPadraoPK;
 import jpa.entities.Utilizador;
 import jpa.session.AtividadehasPadraoFacade;
+import jpa.session.UtilizadorFacade;
 
 @Named("padraoController")
 @SessionScoped
@@ -293,40 +294,8 @@ public class PadraoController implements Serializable {
             }
     }
 
-    public DataModel getItemsNotAssociated() {
-        items = getPaginationNotAssociated().createPageDataModel();
-        return items;
-    }
+    
 
-    public PaginationHelper getPaginationNotAssociated() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
-
-                @Override
-                public int getItemsCount() {
-                    return getFacade().countNotAssociate(atividade);
-                }
-
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().getNotAssociated(atividade));
-                }
-            };
-        }
-        return pagination;
-    }
-
-    public String nextNotAssociated() {
-        getPaginationNotAssociated().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previousNotAssociated() {
-        getPaginationNotAssociated().previousPage();
-        recreateModel();
-        return "List";
-    }
 
     public String prepareListOfPatterns() {
         recreatePagination();
@@ -505,5 +474,33 @@ public class PadraoController implements Serializable {
     public void setAtividades(DataModel<Atividade> atividades) {
         this.atividades = atividades;
     }
+    
+    public String view(Padrao p) {
+        current = p;
+        return "View";
+    }
+    
+    public String edit(Padrao p){
+        current = p;
+        return "Edit";
+    }
+    
+     public void viewAux() {
+        current = (Padrao) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+    }
+    
+    public DataModel getItemsNotAssociated() {
+        items = new ListDataModel(getFacade().getNotAssociated(atividade));
+        return items;
+    }
+    
+    public DataModel getItemsNotAssociatedemp() {
+        items = new ListDataModel(getFacade().getNotAssociatedemp(atividade,utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+    
+    @EJB
+    UtilizadorFacade utilizadorFacade;
 
 }

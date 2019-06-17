@@ -34,7 +34,7 @@
 
                             </div>
                         </div>
-                        <h:commandButton type="submit" class="btn btn-primary" value="#{bundle.AssociateAll}" action="#{padraoController.associateAllPatterns(1)}" disabled="true"/>                                   
+                        <h:commandLink action="#{padraoController.associateAllPatterns(0)}"><button class="btn btn-primary" disabled="true">Associar</button></h:commandLink>                                   
                     </div>                               
                 </div>
                 <br/>
@@ -56,7 +56,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ui:repeat value="#{padraoController.itemsNotAssociated}" var="item">
+                            <ui:repeat value="#{padraoController.getItemsNotAssociatedemp()}" var="item">
                                 <tr>
                                     <td style="text-align: center;">
                                         <h:selectBooleanCheckbox class="check[]" onclick="toggle3();" value="#{padraoController.selectedItems[item]}"/>

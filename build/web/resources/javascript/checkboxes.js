@@ -33,9 +33,7 @@ function toggle3() {
             break;
         }
     }
-    if (checked === 1) {
-        document.getElementsByClassName("btn btn-primary")[0].disabled = false;
-    } else if (checked > 1) {
+    if (checked >= 1) {
         document.getElementsByClassName("btn btn-primary")[0].disabled = false;
     } else {
         document.getElementsByClassName("btn btn-primary")[0].disabled = true;

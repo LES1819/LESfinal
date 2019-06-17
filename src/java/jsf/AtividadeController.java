@@ -224,7 +224,7 @@ public class AtividadeController implements Serializable {
         recreateModel();
         recreatePagination();
         try {
-            int k = getFacade().countRepeated(current.getNome());
+            int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
             if (!hasSomething(current.getNome())) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
             } else {
@@ -233,9 +233,10 @@ public class AtividadeController implements Serializable {
                 } else {
                     getFacade().create(current);
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeCreated2"));
+                   return prepareList();
                 }
             }
-            return prepareList();
+            return "Create";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -245,13 +246,17 @@ public class AtividadeController implements Serializable {
     public String update(int saida) {
         recreateModel();
         recreatePagination();
+        if(saida==0){
+            getFacade().destroyAtividade(current);
+        }
+        else if(saida==1) current.setIdAtividadeOriginal(null);
         try {
             String name = getFacade().find(current.getIdAtividades()).getNome();
             if (name.equals(current.getNome())) {
                 getFacade().edit(current);
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeUpdated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeUpdated2"));
             } else {
-                int k = getFacade().countRepeated(current.getNome());
+                 int k = getFacade().findByName(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(), current.getNome()).size();
                 if (!hasSomething(current.getNome())) {
                     JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nameEmpty"));
                     return null;
@@ -317,6 +322,7 @@ public class AtividadeController implements Serializable {
         items = new ListDataModel(getFacade().getOriginalAtividades());
         return items;
     }
+   
 
     public PaginationHelper getOriginalAtividadesPagination() {
         if (pagination == null) {
@@ -619,6 +625,16 @@ public class AtividadeController implements Serializable {
         recreateModel();
         
         return "View";
+    }
+     public DataModel getOriginalAtividadeItemsemp() {
+        items = new ListDataModel(getFacade().getOriginalAtividadesemp(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid()));
+        return items;
+    }
+    
+    
+     public DataModel getOriginalItemsemp() {
+        items = new ListDataModel(getFacade().findOriginalemp(utilizadorFacade.find(Integer.parseInt(getUserId())).getEmpresaid(),current.getProcessoidProcesso().getIdProcesso()));
+        return items;
     }
     
     @EJB

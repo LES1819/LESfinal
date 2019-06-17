@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import jpa.entities.Atividade;
+import jpa.entities.Empresa;
 
 /**
  *
@@ -61,5 +62,17 @@ public class AtividadeFacade extends AbstractFacade<Atividade> {
     
     public List findByIdPadraoIdAtiv(int padr, int ativ){
         return em.createNamedQuery("AtividadehasPadrao.removeByIdPadraoIdAtiv").setParameter("idAtiv", ativ).setParameter("idPadrao", padr).getResultList();
+    }
+    
+    public List findByName(Empresa empresa, String nome){
+        return em.createNamedQuery("Atividade.byname").setParameter("empresa", empresa).setParameter("nome", nome).getResultList();
+    }
+    
+    public List getOriginalAtividadesemp(Empresa empresa) {
+        return em.createNamedQuery("Atividade.getOriginalemp").setParameter("empresa", empresa).getResultList();
+    }
+    
+    public List findOriginalemp(Empresa empresa, int pid) {
+        return em.createNamedQuery("Atividade.findOriginalemp").setParameter("empresa", empresa).setParameter("param", pid).getResultList();
     }
 }

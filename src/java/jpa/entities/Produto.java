@@ -37,13 +37,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
+    @NamedQuery(name = "Produto.findAllemp", query = "SELECT p FROM Produto p WHERE p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid= :empresa)"),
     @NamedQuery(name = "Produto.findByIdProduto", query = "SELECT p FROM Produto p WHERE p.idProduto = :idProduto"),
     @NamedQuery(name = "Produto.notAssociated", query = "SELECT p FROM Produto p WHERE p NOT IN(SELECT a.produto FROM ProdutohasAtividade a WHERE a.atividade = :atividade)"),
+    @NamedQuery(name = "Produto.notAssociatedemp", query = "SELECT p FROM Produto p WHERE p NOT IN(SELECT a.produto FROM ProdutohasAtividade a WHERE a.atividade = :atividade) AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Produto.alreadyExists", query = "SELECT p FROM Produto p, Empresa e WHERE p.nome = :nome AND e.id = 1"),
     @NamedQuery(name = "Produto.findByNome", query = "SELECT p FROM Produto p WHERE p.nome = :nome"),
     @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
     @NamedQuery(name = "Produto.destroyAssociations", query = "DELETE FROM ProdutohasAtividade p WHERE p.produto = :produto"),
     @NamedQuery(name = "Produto.getAssociations", query = "SELECT p.produto FROM ProdutohasAtividade p WHERE p.produto =:product"),
+    @NamedQuery(name = "Produto.byname", query = "SELECT p FROM Produto p WHERE p.nome= :nome AND p.utilizadoridUtilizador IN (SELECT u FROM Utilizador u WHERE u.empresaid = :empresa)"),
     @NamedQuery(name = "Produto.findByTipo", query = "SELECT p FROM Produto p WHERE p.tipo = :tipo"),
     @NamedQuery(name = "Produto.findByDataCriacao", query = "SELECT p FROM Produto p WHERE p.dataCriacao = :dataCriacao")})
 public class Produto implements Serializable {
