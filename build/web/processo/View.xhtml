@@ -69,7 +69,9 @@
                 <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
                     <f:facet name="header">
                         <h:outputText value="Data de criação: "/>
-                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.dataCriacao}"/>
+                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.dataCriacao}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
                     </f:facet>
                 </h:dataTable>
                 

@@ -17,7 +17,7 @@
                 
                 <div class="ml-auto" style="">
                     <h:commandButton class="check btn btn-primary" action="#{produtoController.prepareCreate}" value="Criar"/>
-                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
                   
                   
                   </div> 
@@ -36,7 +36,7 @@
                         
                         <th class="no-sort" data-index="0">
                             
-                            <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                            <h:selectBooleanCheckbox onclick="toggleAll2()"/>
                         </th>
                         <th data-index="1">Nome</th>
                         <th data-index="2">Descrição</th>
@@ -76,13 +76,13 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cenas?</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">#{bundle.ListaApagarProduto2}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Correto</p>
+                            <p>#{bundle.ListaApagarProduto}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

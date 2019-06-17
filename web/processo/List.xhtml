@@ -21,7 +21,7 @@
                 <div class="btn-group right">
                     <h:commandButton class="check btn btn-primary" action="#{processoController.prepareCreate}" value="Criar"/>
 
-                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
 
                 </div> 
                 <br />
@@ -38,7 +38,7 @@
 
                                 <th class="no-sort" data-index="0">
 
-                                    <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                                    <h:selectBooleanCheckbox onclick="toggleAll2()"/>
                                 </th>
                                 <th data-index="1">Nome</th>
                                 <th data-index="2">Descrição</th>

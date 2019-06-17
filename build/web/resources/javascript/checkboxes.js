@@ -112,14 +112,43 @@ function toggleproduto() {
             break;
         }
     }
-    if (checked === 1) {
+    if (checked >= 1) {
         document.getElementsByClassName("check btn btn-danger")[0].disabled = false;
-      //  document.getElementById("exampleModalLabel").innerHTML = "Apagar o Produto?";
-     //   document.getElementById("modalid").innerHTML = message;
-    } else if (checked > 1) {
+
+    } else {
+        document.getElementsByClassName("check btn btn-danger")[0].disabled = true;
+    }
+}
+
+function togglepapel() {
+    var checkboxes = document.getElementsByClassName('check[]');
+    var checked = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked === true) {
+            checked++;
+        }
+        if (checked > 1) {
+            break;
+        }
+    }
+    if (checked >= 1) {
         document.getElementsByClassName("check btn btn-danger")[0].disabled = false;
-     //   document.getElementById("exampleModalLabel").innerHTML = "Apagar os produtos?";
-    //    document.getElementById("modalid").innerHTML = "Irá apagar as associções ás atividades.";
+    } else {
+        document.getElementsByClassName("check btn btn-danger")[0].disabled = true;
+    }
+}
+
+function toggleProcesso() {
+    var checkboxes = document.getElementsByClassName('check[]');
+    var checked = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked === true) {
+            checked++;
+            break;
+        }
+    }
+    if (checked >= 1) {
+        document.getElementsByClassName("check btn btn-danger")[0].disabled = false;
     } else {
         document.getElementsByClassName("check btn btn-danger")[0].disabled = true;
     }
