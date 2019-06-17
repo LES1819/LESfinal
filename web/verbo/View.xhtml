@@ -5,39 +5,105 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_2.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewVerboTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+        <ui:define name="content">
+            <br/>            
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewVerboLabel_verboPK_idVerbo}"/>
-                    <h:outputText value="#{verboController.selected.verboPK.idVerbo}" title="#{bundle.ViewVerboTitle_verboPK_idVerbo}"/>
-                    <h:outputText value="#{bundle.ViewVerboLabel_verboPK_nome}"/>
-                    <h:outputText value="#{verboController.selected.verboPK.nome}" title="#{bundle.ViewVerboTitle_verboPK_nome}"/>
-                    <h:outputText value="#{bundle.ViewVerboLabel_tipo}"/>
-                    <h:outputText value="#{verboController.selected.tipo}" title="#{bundle.ViewVerboTitle_tipo}"/>
-                    <h:outputText value="#{bundle.ViewVerboLabel_dataCriacao}"/>
-                    <h:outputText value="#{verboController.selected.dataCriacao}" title="#{bundle.ViewVerboTitle_dataCriacao}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </h:panelGrid>
+                
+                <div class="col-md-12">
+                    <h:link outcome="/verbo/List" value="Lista de Verbos"></h:link> <i class="fa fa-arrow-right seta"></i> Ver Verbo #{verboController.selected.verboPK.nome}
+                <div class="btn-group right">
+                        <h:link class="btn btn-primary" outcome="Edit" value="#{bundle.ViewVerboEditLink}" />
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                </div>
+                <br/>
+                <br/>
+                
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Nome: "/>
+                        <h:outputText style="padding-left: 5%" value="#{verboController.selected.verboPK.nome}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Tipo: "/>
+                        <h:outputText style="padding-left: 5%" value="#{verboController.selected.tipo}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Data de Criação: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.dateToString(verboController.selected.dataCriacao)}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Frases Associadas: "/>
+                        <br/>
+                       <h:dataTable value="#{verboController.frases}" var="item_frase" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="----#{bundle.ListFraseTitle_sujeitoidSujeito}----"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item_frase.sujeitoidSujeito.nome}"/><h:commandLink action="#{fraseController.prepareViewPosVerbo}"> <i class="far fa-eye olho"></i></h:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="----#{bundle.ListFraseTitle_verbo}----"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item_frase.verbo.verboPK.nome}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="----#{bundle.ListFraseTitle_destinatario}----"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item_frase.destinatario}"/>
+                                    </h:column>
+                           
+                                </h:dataTable>
+                    </f:facet>
+                </h:dataTable>
+                
+                    <h:button class="check btn btn-primary" outcome="/verbo/List" value="Voltar"/>
+                
+                </div>
+                <br/>
+          
+                
+                
+
+                
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Apagar o(s) Verbo(s)?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modalid">Irá apagar este verbo e as frases associadas.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <h:commandButton class="btn btn-primary" action="#{verboController.destroyAndList()}" value="Apagar"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <br />
-                <h:commandLink action="#{verboController.destroyAndView}" value="#{bundle.ViewVerboDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewVerboEditLink}"/>
-                <br />
-                <h:commandLink action="#{verboController.prepareCreate}" value="#{bundle.ViewVerboCreateLink}" />
-                <br />
-                <h:commandLink action="#{verboController.prepareList}" value="#{bundle.ViewVerboShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewVerboIndexLink}"/>
+                
 
             </h:form>
         </ui:define>
