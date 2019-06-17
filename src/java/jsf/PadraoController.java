@@ -365,6 +365,11 @@ public class PadraoController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
+    
+    public void viewAux() {
+        current = (Padrao) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+    }
 
     public String prepareCreate() {
         current = new Padrao();
@@ -484,11 +489,7 @@ public class PadraoController implements Serializable {
         current = p;
         return "Edit";
     }
-    
-     public void viewAux() {
-        current = (Padrao) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-    }
+
     
     public DataModel getItemsNotAssociated() {
         items = new ListDataModel(getFacade().getNotAssociated(atividade));

@@ -10,10 +10,10 @@ $(document).ready(function() {
 
 
     $('#example thead tr:eq(1) th').each( function (i) {
-
+     
      if(i >= 1 && i <= 4){   
         $(this).html( '<input type="text"/>' );
-
+ 
         $( 'input', this ).on( 'keyup change', function () {
             if ( table.column(i).search() !== this.value ) {
                 table.column(i).search( this.value ).draw();
@@ -22,7 +22,7 @@ $(document).ready(function() {
         }
     } );
     $('#example thead tr:eq(1) th:eq(5)').html("");
-
+ 
     var table = $('#example').DataTable( {
         orderCellsTop: true,
         fixedHeader: true,

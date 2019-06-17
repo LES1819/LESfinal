@@ -478,8 +478,11 @@ public class AgrupamentoController implements Serializable {
         
         return "View";
     }
+
     
-        public String viewAgrupamento(Agrupamento agrupamento) {
+ 
+	
+    public String viewAgrupamento(Agrupamento agrupamento) {
         current = agrupamento;
         return "/agrupamento/View";
     }
