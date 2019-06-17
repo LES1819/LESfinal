@@ -5,42 +5,71 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_2.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewFraseTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form style="margin-top: 8%;">
-                <div style="float: right">
-                    <h:commandLink class="btn btn-primary" action="#{fraseController.prepareCreate}" value="#{bundle.ViewFraseCreateLink}" style="margin-right: 5px;" /> 
-                     <h:link class="btn btn-primary" outcome="Edit" value="#{bundle.ViewFraseEditLink}" />
-               
-           
-                <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+            <br/>
+            <h:form>
+                
+                <div class="col-md-12">
+                    <h:link outcome="/frase/List" value="Lista de Frases"></h:link> <i class="fa fa-arrow-right seta"></i> Ver Frase: #{fraseController.selected.idFrase}
+                <div class="btn-group right">
+                        <h:link class="btn btn-primary" outcome="Edit" value="#{bundle.ViewFraseEditLink}" />
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
                 </div>
                 <br/>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewFraseLabel_destinatario}"/>
-                    <h:outputText value="#{fraseController.selected.destinatario}" title="#{bundle.ViewFraseTitle_destinatario}"/>
-                    <h:outputText value="#{bundle.ViewFraseLabel_recurso}"/>
-                    <h:outputText value="#{fraseController.selected.recurso}" title="#{bundle.ViewFraseTitle_recurso}"/>
-                    <h:outputText value="#{bundle.ViewFraseLabel_datCriacao}"/>
-                    <h:outputText value="#{fraseController.selected.datCriacao}" title="#{bundle.ViewFraseTitle_datCriacao}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                    <h:outputText value="#{bundle.ViewFraseLabel_artefactosidArtefactos}"/>
-                    <h:outputText value="#{fraseController.selected.artefactosidArtefactos.nome}" title="#{bundle.ViewFraseTitle_artefactosidArtefactos}"/>
-                    <h:outputText value="#{bundle.ViewFraseLabel_sujeitoidSujeito}"/>
-                    <h:outputText value="#{fraseController.selected.sujeitoidSujeito.nome}" title="#{bundle.ViewFraseTitle_sujeitoidSujeito}"/>
-                    <h:outputText value="#{bundle.ViewFraseLabel_utilizadoridUtilizador}"/>
-                    <h:outputText value="#{fraseController.selected.utilizadoridUtilizador.nome}" title="#{bundle.ViewFraseTitle_utilizadoridUtilizador}"/>
-                    <h:outputText value="#{bundle.ViewFraseLabel_verbo}"/>
-                    <h:outputText value="#{fraseController.selected.verbo.verboPK.nome}" title="#{bundle.ViewFraseTitle_verbo}"/>
-                </h:panelGrid>
-                <br />
+                <br/>
+                
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Sujeito: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.selected.sujeitoidSujeito.nome}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Verbo: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.selected.verbo.verboPK.nome}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Destinatário: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.selected.destinatario}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Artefacto: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.selected.artefactosidArtefactos.nome}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Recurso: "/>
+                        <h:outputText style="padding-left: 5%" value="#{bundle.ViewFraseTitle_recurso}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                    <f:facet name="header">
+                        <h:outputText value="Data de Criação: "/>
+                        <h:outputText style="padding-left: 5%" value="#{fraseController.dateToString(fraseController.selected.datCriacao)}"/>
+                    </f:facet>
+                </h:dataTable>
+                
+                    <h:button class="check btn btn-primary" outcome="/frase/List" value="Voltar"/>
+                
+                </div>
+                <br/>
                 
                
                 
