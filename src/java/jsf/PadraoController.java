@@ -61,7 +61,7 @@ public class PadraoController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(10000) {
 
                 @Override
                 public int getItemsCount() {
@@ -437,7 +437,7 @@ public class PadraoController implements Serializable {
         }
         if (counter == 1) {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PadraoDeleted"));
-        } else {
+        } else if(counter > 1){
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PadroesDeleted"));
         }
         selectedItems = new HashMap<>();
