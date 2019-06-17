@@ -42,7 +42,7 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
     }
 
     public void destroyProduto(Produto produto) {
-        em.createNamedQuery("Produto.destroyAssociations").setParameter("produto", produto);
+        em.createNamedQuery("Produto.destroyAssociations").setParameter("produto", produto).executeUpdate();
     }
 
     public List alreadyExists(String n) {

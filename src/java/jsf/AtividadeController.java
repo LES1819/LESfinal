@@ -36,6 +36,7 @@ import jpa.entities.Utilizador;
 import jpa.session.AtividadehasPadraoFacade;
 import jpa.session.PapelhasAtividadeFacade;
 import jpa.session.ProdutohasAtividadeFacade;
+import jpa.session.UtilizadorFacade;
 
 @Named("atividadeController")
 @SessionScoped
@@ -234,7 +235,7 @@ public class AtividadeController implements Serializable {
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeCreated2"));
                 }
             }
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -313,7 +314,7 @@ public class AtividadeController implements Serializable {
     public DataModel getOriginalAtividadeItems() {
         recreatePagination();
         recreateModel();
-        items = getOriginalAtividadesPagination().createPageDataModel();
+        items = new ListDataModel(getFacade().getOriginalAtividades());
         return items;
     }
 
@@ -423,7 +424,7 @@ public class AtividadeController implements Serializable {
                     JsfUtil.addSuccessMessage(toSend2);
                 } 
             } else if (checkedFromView == true) {
-                String toSendView = "Atividade " + current.getNome() + " desassociada com sucesso.";
+                String toSendView = "Atividade " + current.getNome() + " apagada com sucesso.";
                 JsfUtil.addSuccessMessage(toSendView);
                 checkedFromView = false;
             }
@@ -460,7 +461,6 @@ public class AtividadeController implements Serializable {
     public String associateSelectedList() {
         prepareSelectedList();
         for (Atividade a : atividadesOnList) {
-            prepareAssociate(processo);
             FinalAssociate(a);
         }
         selectedItems = new HashMap<>();
@@ -486,22 +486,32 @@ public class AtividadeController implements Serializable {
         current.setNome(a.getNome());
         current.setDescricao(a.getDescricao());
         current.setDataCriacao(new Date(System.currentTimeMillis()));
+        current.setIdAtividadeOriginal(a);/*
+        current.setAtividadehasPadraoCollection(a.getAtividadehasPadraoCollection());
+        current.setPapelhasAtividadeCollection(a.getPapelhasAtividadeCollection());
+        current.setProdutohasAtividadeCollection(a.getProdutohasAtividadeCollection());/*
+        current = a;
+        current.setIdAtividades(0);
+        current.setDataCriacao(new Date());
         current.setIdAtividadeOriginal(a);
-        associate(a);
+        Utilizador user = new Utilizador(1);
+        current.setUtilizadoridUtilizador(user);*/
+        associate();
         recreatePagination();
         recreateModel();
     }
 
-    public String associate(Atividade a) {
-        recreatePagination();
-        recreateModel();
+    public void associate() {
         String toSend = new String();
         toSend += "Atividades(s): ";
         String toSend2 = new String();
         toSend2 += "Foram associadas ";
         try {
+            System.out.println(current.getUtilizadoridUtilizador());
+            current.setUtilizadoridUtilizador(utilizadorFacade.find(1));
             getFacade().create(current);
-            associatePapeisProdutos(a);
+
+            associatePapeisProdutos();
             if (checked == false) {
                 if (atividadesOnList.size() < 8) {
                     for (int i = 0; i < atividadesOnList.size(); i++) {
@@ -517,20 +527,15 @@ public class AtividadeController implements Serializable {
                     JsfUtil.addSuccessMessage(toSend2);
                 }
             }
-            return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
-            return null;
         }
     }
 
-    public void associatePapeisProdutos(Atividade a) {
-        ProdutohasAtividadeController produtoAC = new ProdutohasAtividadeController();
-        PapelhasAtividadeController papelAC = new PapelhasAtividadeController();
-
-        for (PapelhasAtividade association : a.getPapelhasAtividadeCollection()) {
-            association.setAtividade(a);
-            association.setPapel(association.getPapel());
+    public void associatePapeisProdutos() {
+        for (Object association1 : papelhasAtividadeFacade.getAssociatedPapers(current.getIdAtividadeOriginal())) {
+            PapelhasAtividade association = (PapelhasAtividade) association1;
+            association.setAtividade(current);
             association.setDataCriacao(new Date());
             association.setUtilizadoridUtilizador(utilizador);
             association.setIdAssociacao(0);
@@ -541,9 +546,9 @@ public class AtividadeController implements Serializable {
             papelhasAtividadeFacade.create(association);
         }
 
-        for (ProdutohasAtividade association : a.getProdutohasAtividadeCollection()) {
-            association.setAtividade(a);
-            association.setProduto(association.getProduto());
+        for (Object association1 : produtohasAtividadeFacade.getAssociatedProducts(current.getIdAtividadeOriginal())) {
+            ProdutohasAtividade association = (ProdutohasAtividade) association1;
+            association.setAtividade(current);
             association.setDataCriacao(new Date());
             association.setUtilizadoridUtilizador(utilizador);
             association.setIdAssociacao(0);
@@ -554,9 +559,9 @@ public class AtividadeController implements Serializable {
             produtohasAtividadeFacade.create(association);
         }
 
-        for (AtividadehasPadrao association : a.getAtividadehasPadraoCollection()) {
-            association.setAtividade(a);
-            association.setPadrao(association.getPadrao());
+        for (Object association1 : atividadehaspadraoFacade.getAssociatedPatterns(current.getIdAtividadeOriginal())) {
+            AtividadehasPadrao association = (AtividadehasPadrao) association1;
+            association.setAtividade(current);
             association.setDataCriacao(new Date());
             association.setUtilizadoridUtilizador(utilizador);
             association.setIdAssociacao(0);
@@ -578,10 +583,14 @@ public class AtividadeController implements Serializable {
         current = atividade;
         return "View";
     }
+    
+    public String edit(Atividade atividade){
+        current = atividade;
+        return "Edit";
+    }
 
-    public void viewAux() {
-        current = (Atividade) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+    public void viewAux(Atividade item) {
+       current = item;
     }
 
     public String destroyCopy(Atividade atividade) {
@@ -624,6 +633,8 @@ public class AtividadeController implements Serializable {
     private ProdutohasAtividadeFacade produtohasAtividadeFacade;
     @EJB
     private AtividadehasPadraoFacade padraohasAtividadeFacade;
+    @EJB
+    private UtilizadorFacade utilizadorFacade;
     private Boolean checked = false;
     private Boolean checked2 = false;
     private Boolean checkedFromView = false;

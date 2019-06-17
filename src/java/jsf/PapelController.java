@@ -162,9 +162,7 @@ public class PapelController implements Serializable {
     }
 
     public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
+        items = new ListDataModel(getFacade().findAll());
         return items;
     }
 
@@ -256,7 +254,7 @@ public class PapelController implements Serializable {
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PapelCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("PapelCreated2"));
                 }
             }
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;

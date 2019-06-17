@@ -21,6 +21,7 @@ $(document).ready(function() {
         } );
         }
     } );
+    $('#example thead tr:eq(0) th:eq(0)').html("");
     $('#example thead tr:eq(1) th:eq(5)').html("");
  
     var table = $('#example').DataTable( {

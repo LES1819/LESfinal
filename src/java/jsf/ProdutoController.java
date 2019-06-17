@@ -135,6 +135,11 @@ public class ProdutoController implements Serializable {
         }
         return items;
     }
+    
+    public DataModel getItemsList() {
+        items = new ListDataModel(getFacade().findAll());
+        return items;
+    }
 
     private void recreateModel() {
         items = null;
@@ -244,7 +249,7 @@ public class ProdutoController implements Serializable {
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProdutoCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("ProdutoCreated2"));
                 }
             }
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -436,7 +441,7 @@ public class ProdutoController implements Serializable {
         try {
             getFacade().destroyProduto(current);
             getFacade().remove(current);
-            if (checked2 == false) {
+            if (checked2 == false && checkedFromView == false) {
                 if (productsOnList.size() < 8) {
                     for (int i = 0; i < productsOnList.size(); i++) {
                         toSend += productsOnList.get(i).getNome() + ", ";

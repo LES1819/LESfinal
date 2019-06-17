@@ -24,9 +24,7 @@
 
                     <div class="btn-group mr-2 distancia_top_left">
                         <div class="btn-group dropleft" role="group">
-                            <button type="button" id="select" class="check btn btn-secondary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
+                           
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
 
@@ -36,7 +34,7 @@
 
                             </div>
                         </div>
-                        <h:commandButton type="submit" class="btn btn-primary" value="#{bundle.AssociateAll}" action="#{padraoController.associateAllPatterns(1)}" disabled="false"/>                                   
+                        <h:commandButton type="submit" class="btn btn-primary" value="#{bundle.AssociateAll}" action="#{padraoController.associateAllPatterns(1)}" disabled="true"/>                                   
                     </div>                               
                 </div>
                 <br/>
@@ -49,7 +47,7 @@
 
                                 <th class="no-sort" data-index="0">
 
-                                    <h:selectBooleanCheckbox onclick="toggleAll(); enableAssociate();"/>
+                                    <h:selectBooleanCheckbox onclick="toggleAll3()"/>
                                 </th>
                                 <th data-index="1">Nome</th>
                                 <th data-index="2">Descrição</th>
@@ -61,7 +59,7 @@
                             <ui:repeat value="#{padraoController.itemsNotAssociated}" var="item">
                                 <tr>
                                     <td style="text-align: center;">
-                                        <h:selectBooleanCheckbox class="check[]" onchange="enableAssociate();" value="#{padraoController.selectedItems[item]}"/>
+                                        <h:selectBooleanCheckbox class="check[]" onclick="toggle3();" value="#{padraoController.selectedItems[item]}"/>
                                     </td>
                                     <td>
                                         #{item.nome}

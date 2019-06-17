@@ -4,13 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/andre/NetBeansProjects/GPD/src/java/jsf/AtividadeController.java</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/web/processo/View.xhtml</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/web/atividade/List.xhtml</file>
             <file>file:/home/andre/NetBeansProjects/GPD/web/processo/List.xhtml</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/src/java/jpa/entities/Atividade.java</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/src/java/jsf/ProcessoController.java</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/src/java/jpa/session/PapelhasAtividadeFacade.java</file>
-            <file>file:/home/andre/NetBeansProjects/GPD/src/java/jpa/session/ProcessoFacade.java</file>
+            <file>file:/home/andre/NetBeansProjects/GPD/web/processo/Associate.xhtml</file>
         </group>
     </open-files>
 </project-private>

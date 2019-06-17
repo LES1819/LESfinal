@@ -37,7 +37,7 @@
 
                                 <th class="no-sort" data-index="0">
 
-                                    <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                                    <h:selectBooleanCheckbox onclick="toggleAll2()"/>
                                 </th>
                                 <th data-index="1">Nome</th>
                                 <th data-index="2">Descrição</th>
@@ -47,13 +47,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ui:repeat value="#{atividadeController.items}" var="item">
+                            <ui:repeat value="#{atividadeController.getOriginalAtividadeItems()}" var="item">
                                 <tr>
                                     <td style="text-align: center;">
                                         <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{atividadeController.selectedItems[item]}"/>
                                     </td>
                                     <td>
-                                        #{item.nome} <h:commandLink action="#{atividadeController.prepareView}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{atividadeController.prepareEdit}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                        #{item.nome} <h:commandLink action="#{atividadeController.view(item)}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{atividadeController.edit(item)}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
                                     </td>
                                     <td>
                                         #{item.descricao}
@@ -66,15 +66,15 @@
                                     </td>
                                     <td>
                                         <h:commandLink class="check btn btn-outline-success"  action="#{papelController.prepareAssociate(item,0)}"><i class="fas fa-user-tag"></i>&nbsp; Papéis
-                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
                                         </h:commandLink>
                                         <h:outputText value=" "/>
                                         <h:commandLink class="check btn btn-outline-success"  action="#{produtoController.prepareAssociate(item,0)}"><i class="fas fa-book"></i>&nbsp; Produtos
-                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
                                         </h:commandLink>
                                         <h:outputText value=" "/>
                                         <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"><i class="fas fa-project-diagram"></i>&nbsp;  Padrões
-                                            <f:actionListener binding="#{atividadeController.viewAux()}" />
+                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
                                         </h:commandLink>
                                     </td>
                                 </tr>

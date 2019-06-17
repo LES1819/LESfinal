@@ -152,6 +152,11 @@ public class ProcessoController implements Serializable {
         }
         return items;
     }
+    
+    public DataModel getItemsList() {
+        items = new ListDataModel(getFacade().findAll());
+        return items;
+    }
 
     private void recreateModel() {
         items = null;
@@ -241,7 +246,7 @@ public class ProcessoController implements Serializable {
                     JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoCreated1") + current.getNome() + " " + ResourceBundle.getBundle("/resources/Bundle").getString("ProcessoCreated2"));
                 }
             }
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -343,7 +348,7 @@ public class ProcessoController implements Serializable {
         try {
             getFacade().destroyProcesso(current);
             getFacade().remove(current);
-            if (checked == false) {
+            if (checked == false  && checkedFromView == false) {
                 if (processosOnList.size() < 8) {
                     for (int i = 0; i < processosOnList.size(); i++) {
                         toSend += processosOnList.get(i).getNome() + ", ";
@@ -357,7 +362,12 @@ public class ProcessoController implements Serializable {
                     checked = true;
                     JsfUtil.addSuccessMessage(toSend2);
                 }
+            } else if (checkedFromView == true) {
+                String toSendView = "Processo " + current.getNome() + " apagado com sucesso.";
+                JsfUtil.addSuccessMessage(toSendView);
+                checkedFromView = false;
             }
+            
         } catch (Exception e) {
             System.out.println("Erro no destroyFull");
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -395,6 +405,8 @@ public class ProcessoController implements Serializable {
     }
 
     public String destroyAndList() {
+        checkedFromView = true;
+        destroyAssociations();
         performDestroyFull();
         recreateModel();
         checked = false;
@@ -405,9 +417,8 @@ public class ProcessoController implements Serializable {
         return getFacade().getAssociated(current);
     }
 
-    public void viewAux() {
-        current = (Processo) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+    public void viewAux(Processo item) {
+        current = item;
     }
 
     @EJB
@@ -421,4 +432,5 @@ public class ProcessoController implements Serializable {
     private Map<Processo, Boolean> selectedItems = new HashMap<Processo, Boolean>();
     private List<Processo> processosOnList;
     private boolean checked = false;
+    private boolean checkedFromView = false;
 }
