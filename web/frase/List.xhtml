@@ -53,7 +53,11 @@
                                         <h:selectBooleanCheckbox class="check[]" onclick="togglefrase()" value="#{fraseController.selectedItems[item]}"/>
                                     </td>
                                     <td>
-                                        #{item.sujeitoidSujeito.nome} <h:commandLink action="#{fraseController.prepareView}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{fraseController.prepareEdit}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                        #{item.sujeitoidSujeito.nome} <h:commandLink action="#{fraseController.prepareView}"> <i class="far fa-eye olho"></i></h:commandLink> 
+                                        
+                                            <c:if test="#{item.utilizadoridUtilizador.idUtilizador==Integer.parseInt(getUserId())}">
+                                                <h:commandLink action="#{fraseController.prepareEdit}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                            </c:if>
                                     </td>
                                     <td>
                                         #{item.verbo.verboPK.nome}
