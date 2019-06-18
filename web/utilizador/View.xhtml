@@ -14,7 +14,7 @@
                 
             </br>
             <div class="col-md-12">
-                <h:link outcome="/utilizador/List" value="Lista de utilizadores"></h:link><i class="fa fa-arrow-right seta"></i> Ver Utilizador: #{utilizadorController.selected.nome}
+                <h:link outcome="/utilizador/List" value="Lista de Perfis"></h:link><i class="fa fa-arrow-right seta"></i> Ver Utilizador: #{utilizadorController.selected.nome}
                 <div class="btn-group right">
                     <h:form>
                         <h:commandButton class="btn btn-primary" action="Edit" value="Editar"/>
@@ -47,15 +47,15 @@
 
                 <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ViewUtilizadorLabel_nomeCompleto}"/>
+                        <h:outputText value="Nome Completo:"/>
                         <h:outputText value="#{utilizadorController.selected.nomeCompleto}" title="#{bundle.ViewUtilizadorTitle_nomeCompleto}"/>
                     </f:facet>
                 </h:dataTable>
 
                 <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ViewUtilizadorLabel_dataCriacao}"/>
-                        <h:outputText value="#{utilizadorController.selected.dataCriacao}" title="#{bundle.ViewUtilizadorTitle_dataCriacao}">
+                        <h:outputText value="Data de Criação"/>
+                        <h:outputText value="#{utilizadorController.selected.dataCriacao}" title="Data de criação :">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                     </f:facet>
@@ -63,21 +63,43 @@
 
                 <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ViewUtilizadorLabel_empresaid}"/>
-                        <h:outputText value="#{utilizadorController.selected.empresaid.nome}" title="#{bundle.ViewUtilizadorTitle_empresaid}"/>
+                        <h:outputText value="Empresa:"/>
+                        <h:outputText value="#{utilizadorController.selected.empresaid.nome}" title="Empresa:"/>
                     </f:facet>
                 </h:dataTable>
 
                 <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ViewUtilizadorLabel_perfilid}"/>
-                        <h:outputText value="#{utilizadorController.selected.perfilid.nome}" title="#{bundle.ViewUtilizadorTitle_perfilid}"/>
+                        <h:outputText value="#Perfil:"/>
+                        <h:outputText value="#{utilizadorController.selected.perfilid.nome}" title="Perfil:"/>
                     </f:facet>
                 </h:dataTable>
-                <h:button class="check btn btn-primary" outcome="#{produtoController.prepareList()}" value="Voltar"/>
+                <h:button class="check btn btn-primary" outcome="#{utilizadorController.prepareList()}" value="Voltar"/>
             </div>
             
-
+            <br/>
+            
+            <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">#{bundle.ViewApagarUtilizador} #{utilizadorController.selected.nome}?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>#{bundle.ViewApagarUtilizador2}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <h:form>
+                                <h:commandButton class="btn btn-danger" action="#{utilizadorController.destroy()}" value="Apagar"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 

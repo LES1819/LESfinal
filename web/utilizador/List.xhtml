@@ -3,35 +3,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      >
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Utilizador</ui:define>
-            
+        <ui:define name="title">Produto</ui:define>
+
         <ui:define name="content">
-            <br>
-            </br>
-            <div class ="content">
-                <h:outputText value="Lista de Utilizadores"/>
-            </div>
-            <h:form styleClass="jsfcrux\d_list_form">
-                
-                <div class="btn-group right">
-                    <h:commandButton class="check btn btn-primary" action="#{utilizadorController.prepareCreate}" value="Criar"/>
-                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+            <br/>
+            <h:form styleClass="jsfcrux\d_list_form">    
+                <div class="col-md-12">
+                    <h:outputText value="Lista de Produtos"/>
+
+                    <div class="btn-group right">
+                        <h:commandButton class="check btn btn-primary" action="#{produtoController.prepareCreate}" value="Criar"/>
+
+                        <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
+                    </div>
                 </div>
-                <br />
-                
+                <br/>
+                <br/>
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
+                <br/>
                 <div>
                     <table id="example" class="display">
+
                         <thead>
+
                             <tr>
+
                                 <th class="no-sort" data-index="0">
-                                    <h:selectBooleanCheckbox onclick="toggleAll()" />
+
+                                    <h:selectBooleanCheckbox onclick="toggleAll2()"/>
                                 </th>
                                 <th data-index="1">Nome</th>
                                 <th data-index="2">Password</th>
@@ -42,50 +46,80 @@
                                 <th data-index="7">Perfil</th>
                             </tr>
                         </thead>
-                    <tbody>
-                        <ui:repeat value="#{utilizadorController.items}" var="item">
-                            <tr>
-                                <td style="text-align:center;">
-                                    <h:selectBooleanCheckbox class="check[]" onclick="toggle()" />
-                                </td>
-                                <td>
-                                    #{item.nome}
-                                </td>
-                                <td>
-                                    #{item.password}
-                                </td>
-                                <td>
-                                    #{item.email}
-                                </td>
-                                <td>
-                                    #{item.nomeCompleto}
-                                </td>
-                                <td>
-                                    #{item.dataCriacao}
-                                </td>
-                                <td>
-                                    #{item.empresaid.nome}
-                                </td>
-                                <td>
-                                    #{item.perfilid.nome}
-                                </td>
-                                <td>
-                                    <h:commandLink action="#{utilizadorController.prepareView}" value="#{bundle.ListUtilizadorViewLink}"/>
-                                    <h:outputText value=""/>
-                                </td>
-                            </tr>
-                            
-                        </ui:repeat>
-                    </tbody>
-                    </table>  
+                        <tbody>
+                            <ui:repeat value="#{utilizadorController.items}"  var="item">
+                                <tr>
+                                    <td class="text-center">
+                                        <h:selectBooleanCheckbox class="check[]" onclick="toggleUtilizador()" value="#{produtoController.selectedItems[item]}"/>
+                                    </td>
+                                    <td>
+                                        #{item.nome} <h:commandLink action="#{utilizadorController.view(item)}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{utilizadorController.edit(item)}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                    </td>
+                                    <td>
+                                        #{item.password}
+                                    </td>
+                                    <td>
+                                        #{item.email}
+                                    </td>
+                                    <td>
+                                        #{item.nomeCompleto}
+                                    </td>
+                                    <td>
+                                        #{utilizadorController.dateToString(item.dataCriacao)}
+                                    </td>
+                                    <td>
+                                        #{item.empresaid.nome}
+                                    </td>
+                                    <td>
+                                        #{item.perfilid.nome}
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
                 </div>
-                
-            </h:form>
-            <!--
+
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">#{bundle.ListaApagarProduto2}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>#{bundle.ListaApagarProduto}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <h:form>
+                                    <h:commandButton class="btn btn-primary" action="#{utilizadorController.destroy()}" value="Apagar"/>
+                                </h:form>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <h:commandButton class="btn btn-primary" action="#{utilizadorController.destroy()}" value="Apagar"></h:commandButton>
+                        </div>
+                    </div>
+
+                </div>
+            </h:form>  
             <h:outputScript library ="javascript" name ="checkboxes.js" />
-            <h:outputScript library ="javascript" name ="filterUtilizadores.js" />
-            !-->
+            <h:outputScript library ="javascript" name ="filterUtilizador.js" />
         </ui:define>
     </ui:composition>
-
 </html>

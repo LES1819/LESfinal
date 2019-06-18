@@ -48,14 +48,14 @@
 
                     <div class="row form-group row ajustar_caixas2">
                         <h:outputLabel value="#{bundle.CreateUtilizadorLabel_empresaid}" for="empresaid" class="col-md-2 mudar2"/>
-                        <h:selectOneMenu id="empresaid" value="#{utilizadorController.selected.empresaid}" title="#{bundle.CreateUtilizadorTitle_empresaid}" required="true" requiredMessage="#{bundle.CreateUtilizadorRequiredMessage_empresaid}">
+                        <h:selectOneMenu id="empresaid" value="#{utilizadorController.selected.empresaid.nome}" title="#{bundle.CreateUtilizadorTitle_empresaid}" required="true" requiredMessage="#{bundle.CreateUtilizadorRequiredMessage_empresaid}">
                             <f:selectItems value="#{empresaController.itemsAvailableSelectOne}"/>
                         </h:selectOneMenu>
                     </div>
 
                     <div class="row form-group row ajustar_caixas2" >
                         <h:outputLabel value="#{bundle.CreateUtilizadorLabel_perfilid}" for="perfilid" class="col-md-2 mudar2"/>
-                        <h:selectOneMenu id="perfilid" value="#{utilizadorController.selected.perfilid}" title="#{bundle.CreateUtilizadorTitle_perfilid}" required="true" requiredMessage="#{bundle.CreateUtilizadorRequiredMessage_perfilid}">
+                        <h:selectOneMenu id="perfilid" value="#{utilizadorController.selected.perfilid.nome}" title="#{bundle.CreateUtilizadorTitle_perfilid}" required="true" requiredMessage="#{bundle.CreateUtilizadorRequiredMessage_perfilid}">
                             <f:selectItems value="#{perfilController.itemsAvailableSelectOne}"/>
                         </h:selectOneMenu>
                     </div>
