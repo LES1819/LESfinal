@@ -8,6 +8,9 @@ package jpa.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.ResourceBundle;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import jsf.util.JsfUtil;
 
 /**
  *
@@ -36,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Utilizador")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Utilizador.findID", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome"),
+    @NamedQuery(name = "Utilizador.login", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome and u.password = :password"),
     @NamedQuery(name = "Utilizador.findAll", query = "SELECT u FROM Utilizador u"),
     @NamedQuery(name = "Utilizador.findByIdUtilizador", query = "SELECT u FROM Utilizador u WHERE u.idUtilizador = :idUtilizador"),
     @NamedQuery(name = "Utilizador.findByNome", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome"),
@@ -122,6 +128,7 @@ public class Utilizador implements Serializable {
         this.email = email;
         this.dataCriacao = dataCriacao;
     }
+    
 
     public Integer getIdUtilizador() {
         return idUtilizador;
@@ -328,5 +335,8 @@ public class Utilizador implements Serializable {
     public String toString() {
         return "jpa.entities.Utilizador[ idUtilizador=" + idUtilizador + " ]";
     }
+    
+
+
 
 }
