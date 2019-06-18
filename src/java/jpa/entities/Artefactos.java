@@ -122,7 +122,7 @@ public class Artefactos implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.entities.Artefactos[ idArtefactos=" + idArtefactos + " ]";
+        return nome;
     }
     
 }
