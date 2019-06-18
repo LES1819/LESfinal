@@ -5,69 +5,78 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_2.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ListFraseTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:form styleClass="jsfcrud_list_form" style="margin-top: 8%">
-               
-                
-                
-               
-                
-                <br />
+            
+            
+            
+            
+            
+            <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListFraseEmpty}" rendered="#{fraseController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{fraseController.items.rowCount > 0}">
-                    <h:outputText value="#{fraseController.pagination.pageFirstItem + 1}..#{fraseController.pagination.pageLastItem + 1}/#{fraseController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{fraseController.previous}" value="#{bundle.Previous} #{fraseController.pagination.pageSize}" rendered="#{fraseController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{fraseController.next}" value="#{bundle.Next} #{fraseController.pagination.pageSize}" rendered="#{fraseController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{fraseController.items_possible}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name ="header">
-                                <h:selectBooleanCheckbox onclick="toggleAll2()"></h:selectBooleanCheckbox>
-                            </f:facet>
-                            <h:selectBooleanCheckbox class="check[]" onclick="togglefrase()" value="#{fraseController.selectedItems[item]}"></h:selectBooleanCheckbox>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_sujeitoidSujeito}"/>
-                                
-                            </f:facet>
-                            <h:outputText value="#{item.sujeitoidSujeito.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_verbo}"/>
-                               
-                            </f:facet>
-                            <h:outputText value="#{item.verbo.verboPK.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_destinatario}"/>
-                              
-                            </f:facet>
-                            <h:outputText value="#{item.destinatario}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_datCriacao}"/>
-                              
-                            </f:facet>
-                            <h:outputText value="#{item.datCriacao}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
+                <br/>
+                <div class="row">
+                    <h:link outcome="/agrupamento/List" value="Lista de Agrupamentos"/><i class="fa fa-arrow-right seta"></i> Associar Frases ao Agrupamento: #{agrupamentoController.selected.nome}
+            </div>
+                <div class="btn-group right">
+
+
+                    <div class="btn-group mr-2 distancia_top_left">
                         
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="false"><span>Associar</span></button>
-                <br />
+                        <button type="button" class="check btn btn-primary" data-toggle="modal" data-target="#exampleModal" disabled="false"><span>Associar</span></button>                                   
+                    </div>                               
+                </div>
+                <br/>
+                
+                
+            <div>
+            <table id="example" class="display">
+               
+                <thead>
+             
+                    <tr>
+                        
+                        <th class="no-sort" data-index="0">
+                            
+                            <h:selectBooleanCheckbox onclick="toggleAll(); enableAssociate();"/>
+                        </th>
+                        <th data-index="1">Sujeito</th>
+                        <th data-index="2">Verbo</th>
+                        <th data-index="3">Destinatário</th>
+                        <th data-index="4">Data de criação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:repeat value="#{fraseController.items_possible}" var="item">
+                        <tr>
+                            <td style="text-align: center;">
+                                <h:selectBooleanCheckbox class="check[]" onchange="enableAssociate();" value="#{agrupamentoController.selectedItems[item]}"/>
+                            </td>
+                            <td>
+                                #{item.sujeitoidSujeito.nome}
+                            </td>
+                            <td>
+                                #{item.verbo.verboPK.nome}
+                            </td>
+                            <td>
+                                #{item.destinatario}
+                            </td>
+                            <td>
+                                #{fraseController.dateToString(item.datCriacao)}
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+        </div>
+                <h:link class="check btn btn-primary" outcome="/agrupamento/List" value="Voltar"/>
+           
+             
                 <br />
                 <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -88,8 +97,9 @@
                                     </div>
                                 </div>
                             </div>
-            </h:form>
-            <h:outputScript library ="javascript" name ="checkboxes.js" />
+         </h:form>
+            <h:outputScript library="javascript" name="checkboxes.js"/>
+            <h:outputScript library="javascript" name="filterAssociateFrases.js"/>
         </ui:define>
     </ui:composition>
 
