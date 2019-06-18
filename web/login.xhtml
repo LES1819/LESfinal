@@ -58,20 +58,20 @@
 
                         <h:outputText value="Username" />
                         <br />
-                        <h:inputText id="username" value="#{login.user}"></h:inputText>
+                        <h:inputText id="username" value="#{nome}"></h:inputText>
                         <h:message for="username"></h:message>
                         <br /><br />
 
 
                         <h:outputText value="Password" />
                         <br />
-                        <h:inputSecret id="password" value="#{login.pwd}"></h:inputSecret>
+                        <h:inputSecret id="password" value="#{password}"></h:inputSecret>
                         <h:message for="password"></h:message>
                         <br /><br />
 
                         <!--<button action="class="btn btn-primary btn-lg btn-block" value="Login"
                         style="margin-top: 25px;"> Entrar </button> !--> 
-                        <h:commandButton action="#{login.validateUsernamePassword}"
+                        <h:commandButton action="#{utilizadorController.validateUsernamePassword(nome, password)}"
                                          value="Login"></h:commandButton>
                     </div>
                 </h:form>
