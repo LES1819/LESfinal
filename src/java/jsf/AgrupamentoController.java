@@ -478,7 +478,7 @@ public class AgrupamentoController implements Serializable {
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             }
-            prepareSelectedListPadrao();
+            prepareSelectedListPadroes();
         }
 	recreatePagination();
         recreateModel();
