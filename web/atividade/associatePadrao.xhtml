@@ -13,7 +13,7 @@
             <br/>         
             <h:form styleClass="jsfcrud_list_form">
                 <div class="col-md-12">
-                    <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/> <i class="fa fa-arrow-right seta"></i> Associar Padrões à Atividade: #{atividadeController.selected.nome}
+                <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/><i class="fa fa-arrow-right seta"></i>Associar Padrões à Atividade: #{atividadeController.selected.nome}                       
                     <div class="btn-group right">                       
                         <h:commandLink action="#{padraoController.associateAllPatterns(0)}"><button class="btn btn-primary" disabled="true">Associar</button> </h:commandLink>                                
                     </div>                               
@@ -44,7 +44,7 @@
                         <tbody>
                             <ui:repeat value="#{padraoController.getItemsNotAssociatedemp()}" var="item">
                                 <tr>
-                                    <td class="text-center">
+                                    <td style="text-align: center;">
                                         <h:selectBooleanCheckbox class="check[]" onclick="toggle3();" value="#{padraoController.selectedItems[item]}"/>
                                     </td>
                                     <td>
