@@ -6,6 +6,12 @@ import jsf.util.PaginationHelper;
 import jpa.session.ArtefactosFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +23,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.entities.Utilizador;
+
 
 @Named("artefactosController")
 @SessionScoped
@@ -28,8 +36,15 @@ public class ArtefactosController implements Serializable {
     private jpa.session.ArtefactosFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private Utilizador utilizador;
+    private Artefactos Artefactos;
+
+    private Map<Artefactos, Boolean> selectedItems = new HashMap<Artefactos, Boolean>();
+    private List<Artefactos> artefactosesOnList;
 
     public ArtefactosController() {
+        selectedItems = new HashMap<>();
+        artefactosesOnList = new ArrayList<>();
     }
 
     public Artefactos getSelected() {
@@ -38,6 +53,19 @@ public class ArtefactosController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+
+     private void prepareSelectedList(){
+        artefactosesOnList = new ArrayList<Artefactos>();
+        for(Artefactos a : selectedItems.keySet()){
+            if(selectedItems.get(a) == true){
+                artefactosesOnList.add(a);
+            }
+        }
+    }
+
+    public Map<Artefactos, Boolean> getSelectedItems(){
+        return selectedItems;
     }
 
     private ArtefactosFacade getFacade() {
@@ -62,9 +90,29 @@ public class ArtefactosController implements Serializable {
         return pagination;
     }
 
+    public PaginationHelper getOriginalPagination() {
+        if (pagination == null) {
+            pagination = new PaginationHelper(10) {
+
+                @Override
+                public int getItemsCount() {
+                    return getFacade().countOriginal();
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(getFacade().getOriginal());
+                }
+                
+            };
+        }
+        return pagination;
+    }
+
     public String prepareList() {
         recreateModel();
-        return "List";
+        recreatePagination();
+        return "/artefactos/List";
     }
 
     public String prepareView() {
@@ -80,6 +128,8 @@ public class ArtefactosController implements Serializable {
     }
 
     public String create() {
+        recreatePagination();
+        recreateModel();
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ArtefactosCreated"));
@@ -90,11 +140,49 @@ public class ArtefactosController implements Serializable {
         }
     }
 
+public String createAndList() {
+        create();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "List";
+    }
+
     public String prepareEdit() {
         current = (Artefactos) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
+
+    public void associateSelectedList(){
+        prepareSelectedList();
+        for(Artefactos a : artefactosesOnList){
+            FinalAssociate(a);
+        }
+    }
+
+    
+    public String FinalAssociate(Artefactos a){        
+        current.setIdArtefactos(0);
+        current.setNome(a.getNome());
+        current.setDescricao(a.getDescricao());
+        associate();
+        recreatePagination();
+        recreateModel();
+        return "Associate";
+    }
+    
+    public String associate() {
+        try {
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage("Artefacto Associado");
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
 
     public String update() {
         try {
@@ -105,6 +193,38 @@ public class ArtefactosController implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
+    }
+
+    public String updateAndView() {
+        update();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "View";
+    }
+
+       public String updateAndEdit() {
+        update();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "Edit";
+    }
+
+      public void destroyArtefactos(Artefactos a) {
+        current = a;
+        performDestroyFull();
+        recreatePagination();
+        recreateModel();
+    }
+
+    public String destroyArtefactoses() {
+        prepareSelectedList();
+        for (int i = 0; i < artefactosesOnList.size(); i++) {
+            destroyArtefactos(artefactosesOnList.get(i));
+        }
+        selectedItems = new HashMap<>();
+        return "List";
     }
 
     public String destroy() {
@@ -126,6 +246,29 @@ public class ArtefactosController implements Serializable {
             // all items were removed - go back to list
             recreateModel();
             return "List";
+        }
+    }
+
+    public String destroyAndList() {
+        performDestroyFull();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "List";
+    }
+
+    public void viewAux() {
+        current = (Artefactos) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+    }
+    
+    private void performDestroyFull() {
+        try {
+            getFacade().destroyArtefactos(current);
+            getFacade().remove(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ArtefactosDeleted"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -153,9 +296,34 @@ public class ArtefactosController implements Serializable {
         }
     }
 
+     public String view(Artefactos artefactos) {
+        current = artefactos;
+        return "View";
+    }
+    
+    public String edit(Artefactos artefactos){
+        current = artefactos;
+        return "Edit";
+    }
+    
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
+        }
+        return items;
+    }
+
+     public DataModel getItemsList() {
+        items = new ListDataModel(getFacade().findAll());
+        return items;
+    }
+
+    
+    public DataModel getOriginalItems(){
+        recreatePagination();
+        recreateModel();
+        if(items == null) {
+            items = getOriginalPagination().createPageDataModel();
         }
         return items;
     }
