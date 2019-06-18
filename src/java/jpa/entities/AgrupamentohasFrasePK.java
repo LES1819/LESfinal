@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author andre
+ * @author joaohenriques
  */
 @Embeddable
 public class AgrupamentohasFrasePK implements Serializable {
