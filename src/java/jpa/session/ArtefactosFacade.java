@@ -5,6 +5,7 @@
  */
 package jpa.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import jpa.entities.Artefactos;
 
 /**
  *
- * @author andre
+ * @author diogo
  */
 @Stateless
 public class ArtefactosFacade extends AbstractFacade<Artefactos> {
@@ -28,5 +29,17 @@ public class ArtefactosFacade extends AbstractFacade<Artefactos> {
     public ArtefactosFacade() {
         super(Artefactos.class);
     }
+    
+    public List getOriginal(){
+        return em.createNamedQuery("Artefactos.findOriginal").getResultList();
+    }
+    
+    public int countOriginal(){
+        return getOriginal().size();
+    }
 
+     public void destroyArtefactos(Artefactos Artefactos){
+       
+       
+    }
 }
