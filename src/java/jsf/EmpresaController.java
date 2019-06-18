@@ -62,6 +62,16 @@ public class EmpresaController implements Serializable {
         }
         return pagination;
     }
+    
+    public String view(Empresa e) {
+        current = e;
+        return "View";
+    }
+    
+    public String edit(Empresa e){
+        current = e;
+        return "Edit";
+    }
 
     public String prepareList() {
         recreateModel();
@@ -116,6 +126,48 @@ public class EmpresaController implements Serializable {
             }
         }
         return false;
+    }
+    
+    public String dateToString(Date date) {
+        String dateInString = date.toString();
+        int length = dateInString.length();
+        String year = dateInString.substring(length - 4, length);
+        String month = getMonth(dateInString.substring(4, 7));
+        String day = "" + dateInString.charAt(8) + dateInString.charAt(9);
+        String time = dateInString.substring(11, 19);
+        String finalDate = year + "/" + month + "/" + day + " " + time;
+        return finalDate;
+    }
+
+    public String getMonth(String month) {
+        switch (month) {
+            case "Jan":
+                return "01";
+            case "Feb":
+                return "02";
+            case "Mar":
+                return "03";
+            case "Apr":
+                return "04";
+            case "May":
+                return "05";
+            case "Jun":
+                return "06";
+            case "Jul":
+                return "07";
+            case "Aug":
+                return "08";
+            case "Sep":
+                return "09";
+            case "Oct":
+                return "10";
+            case "Nov":
+                return "11";
+            case "Dec":
+                return "12";
+            default:
+                return null;
+        }
     }
     
     public boolean hasSomething(String s) {

@@ -6,6 +6,7 @@ import jsf.util.PaginationHelper;
 import jpa.session.PerfilFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -76,7 +77,18 @@ public class PerfilController implements Serializable {
     public String prepareCreate() {
         current = new Perfil();
         selectedItemIndex = -1;
+        current.setDataCriacao(new Date());
         return "Create";
+    }
+
+    public String view(Perfil p) {
+        current = p;
+        return "View";
+    }
+
+    public String edit(Perfil p) {
+        current = p;
+        return "Edit";
     }
 
     public String create() {
@@ -104,6 +116,48 @@ public class PerfilController implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
+        }
+    }
+
+    public String dateToString(Date date) {
+        String dateInString = date.toString();
+        int length = dateInString.length();
+        String year = dateInString.substring(length - 4, length);
+        String month = getMonth(dateInString.substring(4, 7));
+        String day = "" + dateInString.charAt(8) + dateInString.charAt(9);
+        String time = dateInString.substring(11, 19);
+        String finalDate = year + "/" + month + "/" + day + " " + time;
+        return finalDate;
+    }
+
+    public String getMonth(String month) {
+        switch (month) {
+            case "Jan":
+                return "01";
+            case "Feb":
+                return "02";
+            case "Mar":
+                return "03";
+            case "Apr":
+                return "04";
+            case "May":
+                return "05";
+            case "Jun":
+                return "06";
+            case "Jul":
+                return "07";
+            case "Aug":
+                return "08";
+            case "Sep":
+                return "09";
+            case "Oct":
+                return "10";
+            case "Nov":
+                return "11";
+            case "Dec":
+                return "12";
+            default:
+                return null;
         }
     }
 
