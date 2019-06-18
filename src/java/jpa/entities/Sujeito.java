@@ -118,7 +118,7 @@ public class Sujeito implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.entities.Sujeito[ idSujeito=" + idSujeito + " ]";
+        return nome;
     }
 
 }
