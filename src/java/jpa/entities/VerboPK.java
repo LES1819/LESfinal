@@ -78,7 +78,7 @@ public class VerboPK implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.entities.VerboPK[ idVerbo=" + idVerbo + ", nome=" + nome + " ]";
+        return nome;
     }
 
 }
