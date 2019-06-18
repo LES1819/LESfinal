@@ -6,6 +6,12 @@ import jsf.util.PaginationHelper;
 import jpa.session.SujeitoFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +23,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.entities.Utilizador;
 
 @Named("sujeitoController")
 @SessionScoped
@@ -28,8 +35,13 @@ public class SujeitoController implements Serializable {
     private jpa.session.SujeitoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    
+    private Map<Sujeito, Boolean> selectedItems = new HashMap<Sujeito, Boolean>();
+    private List<Sujeito> sujeitosOnList;
+    
     public SujeitoController() {
+        selectedItems = new HashMap<>();
+        sujeitosOnList = new ArrayList<>();
     }
 
     public Sujeito getSelected() {
@@ -38,6 +50,18 @@ public class SujeitoController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+         private void prepareSelectedList(){
+        sujeitosOnList = new ArrayList<Sujeito>();
+        for(Sujeito a : selectedItems.keySet()){
+            if(selectedItems.get(a) == true){
+                sujeitosOnList.add(a);
+            }
+        }
+    }
+
+    public Map<Sujeito, Boolean> getSelectedItems(){
+        return selectedItems;
     }
 
     private SujeitoFacade getFacade() {
@@ -61,7 +85,24 @@ public class SujeitoController implements Serializable {
         }
         return pagination;
     }
+public PaginationHelper getOriginalPagination() {
+        if (pagination == null) {
+            pagination = new PaginationHelper(10) {
 
+                @Override
+                public int getItemsCount() {
+                    return getFacade().countOriginal();
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(getFacade().getOriginal());
+                }
+                
+            };
+        }
+        return pagination;
+    }
     public String prepareList() {
         recreateModel();
         return "List";
@@ -89,13 +130,46 @@ public class SujeitoController implements Serializable {
             return null;
         }
     }
-
+    public String createAndList() {
+        create();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "List";
+    }
     public String prepareEdit() {
         current = (Sujeito) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-
+    
+      public void associateSelectedList(){
+        prepareSelectedList();
+        for(Sujeito a : sujeitosOnList){
+            FinalAssociate(a);
+        }
+    }
+    
+      public String FinalAssociate(Sujeito a){        
+        current.setIdSujeito(0);
+        current.setNome(a.getNome());
+        associate();
+        recreatePagination();
+        recreateModel();
+        return "Associate";
+    }  
+      
+      public String associate() {
+        try {
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage("Sujeito Associado");
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }  
+      
     public String update() {
         try {
             getFacade().edit(current);
@@ -107,6 +181,56 @@ public class SujeitoController implements Serializable {
         }
     }
 
+       public String updateAndView() {
+        update();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "View";
+    }
+
+    public String view(Sujeito sujeito) {
+        current = sujeito;
+        return "View";
+    }
+    
+    public String edit(Sujeito sujeito){
+        current = sujeito;
+        return "Edit";
+    }  
+       
+       public String updateAndEdit() {
+        update();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "Edit";
+    }
+    
+    public void destroySujeito(Sujeito a) {
+        current = a;
+        performDestroyFull();
+        recreatePagination();
+        recreateModel();
+    }
+    
+      public String destroyAndList() {
+        performDestroyFull();
+        recreateModel();
+        updateCurrentItem();
+        recreateModel();
+        return "List";
+    }
+    
+    public String destroySujeitos() {
+        prepareSelectedList();
+        for (int i = 0; i < sujeitosOnList.size(); i++) {
+            destroySujeito(sujeitosOnList.get(i));
+        }
+        selectedItems = new HashMap<>();
+        return "List";
+    }   
+       
     public String destroy() {
         current = (Sujeito) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -128,7 +252,17 @@ public class SujeitoController implements Serializable {
             return "List";
         }
     }
-
+    
+     private void performDestroyFull() {
+        try {
+            getFacade().destroySujeito(current);
+            getFacade().remove(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("SujeitosDeleted"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+        }
+    }
+    
     private void performDestroy() {
         try {
             getFacade().remove(current);
@@ -160,6 +294,12 @@ public class SujeitoController implements Serializable {
         return items;
     }
 
+      public DataModel getItemsList() {
+        items = new ListDataModel(getFacade().findAll());
+        return items;
+    }
+
+    
     private void recreateModel() {
         items = null;
     }
