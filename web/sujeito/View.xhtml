@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewSujeitoTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewSujeitoLabel_nome}"/>
-                    <h:outputText value="#{sujeitoController.selected.nome}" title="#{bundle.ViewSujeitoTitle_nome}"/>
-                    <h:outputText value="#{bundle.ViewSujeitoLabel_idSujeito}"/>
-                    <h:outputText value="#{sujeitoController.selected.idSujeito}" title="#{bundle.ViewSujeitoTitle_idSujeito}"/>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{sujeitoController.destroyAndView}" value="#{bundle.ViewSujeitoDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewSujeitoEditLink}"/>
-                <br />
-                <h:commandLink action="#{sujeitoController.prepareCreate}" value="#{bundle.ViewSujeitoCreateLink}" />
-                <br />
-                <h:commandLink action="#{sujeitoController.prepareList}" value="#{bundle.ViewSujeitoShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewSujeitoIndexLink}"/>
+        <ui:define name="content">
+            <br/>
+            <div class="col-md-12">
+                <h:link outcome="/sujeito/List" value="Lista de Sujeitos"></h:link><i class="fa fa-arrow-right seta"></i> Ver Sujeito: #{sujeitoController.selected.nome}
+                <div class="btn-group right">
+                    <h:form>
+                        <h:commandButton class="btn btn-primary" action="Edit" value="Editar"/>
+                    </h:form>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                </div>
+                <br/>
+                <br/>        
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
 
-            </h:form>
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                        
+
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListSujeitoTitle_nome}: "/>
+                        <h:outputText class="outputtextstyle" value="#{sujeitoController.selected.nome}"/>
+                    </f:facet>   
+                </h:dataTable>                                                     
+                <h:button class="check btn btn-primary" outcome="#{sujeitoController.prepareList()}" value="Voltar"/>
+            </div>
+
+
+            <br/>
+            <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apagar Sujeito: #{sujeitoController.selected.nome}?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apagar o Sujeito?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <h:form>
+                                <h:commandButton class="btn btn-primary" action="#{sujeitoController.destroyAndList()}" value="Apagar"/>
+                            </h:form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
         </ui:define>
     </ui:composition>
 
-</html>
+</xhtml>
