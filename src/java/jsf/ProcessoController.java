@@ -379,7 +379,8 @@ public class ProcessoController implements Serializable {
     }
 
     public void destroyAssociations() {
-        for (Atividade c : current.getAtividadeCollection()) {
+        for (Object b : getFacade().getAssociated(current)) {
+            Atividade c = (Atividade) b;
             papelhasatividadeFacade.destroyAsso(c);
             produtohasatividadeFacade.destroyAsso(c);
             atividadehaspadraoFacade.destroyAsso(c);
