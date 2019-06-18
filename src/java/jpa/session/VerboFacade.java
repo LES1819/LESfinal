@@ -5,6 +5,7 @@
  */
 package jpa.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,19 @@ public class VerboFacade extends AbstractFacade<Verbo> {
 
     public VerboFacade() {
         super(Verbo.class);
+    }
+    
+    /**
+     * obter a lista de frases com aquele verbo
+     * @param id id do verbo
+     * @return lista de frases com aquele verbo
+     */
+    public List pesquisaVerbos(int id) {
+        return em.createNamedQuery("Frase.findByVerboId").setParameter("verbo_id", id).getResultList();
+    }
+
+    public void removeId(int id) {
+        em.createNamedQuery("Verbo.findByVerboIdRemove").setParameter("verbo_id", id).getResultList();
     }
 
 }
