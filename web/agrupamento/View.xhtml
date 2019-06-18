@@ -104,7 +104,10 @@
                         </f:facet>
                     </h:dataTable>
                         <h:button class="check btn btn-primary" outcome="/agrupamento/List" value="Voltar"/>
-                
+                        <div class="btn-group right">
+   
+                            <h:button outcome="#{fraseController.prepareAssociate(agrupamentoController.selected)}" class="btn btn-success" value="Associar Frases"/>
+                        </div>
 
                     
 
