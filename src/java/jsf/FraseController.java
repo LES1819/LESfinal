@@ -1,7 +1,7 @@
 package jsf;
 
 //import com.sun.xml.internal.ws.util.StringUtils;
-import static com.journaldev.jsf.util.SessionUtils.getUserId;
+import static jsf.util.SessionUtils.getUserId;
 import jpa.entities.Frase;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
