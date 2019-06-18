@@ -1,4 +1,4 @@
-    package jsf;
+package jsf;
 
 import static com.journaldev.jsf.util.SessionUtils.getUserId;
 import jpa.entities.Agrupamento;
@@ -72,7 +72,7 @@ public class AgrupamentoController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(1000000) {
 
                 @Override
                 public int getItemsCount() {
@@ -98,6 +98,11 @@ public class AgrupamentoController implements Serializable {
         current = new Agrupamento();
         current.setIdAgrupamento(0);
 	Date date = new Date();
+	
+	utilizador = new Utilizador();
+        utilizador.setIdUtilizador(Integer.parseInt(getUserId()));
+        current.setUtilizadoridUtilizador(utilizador);
+	    
         current.setDataCriacao(date);
         selectedItemIndex = -1;
         recreatePagination();
@@ -473,8 +478,10 @@ public class AgrupamentoController implements Serializable {
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             }
-            prepareSelectedListFrases();
+            prepareSelectedListPadrao();
         }
+	recreatePagination();
+        recreateModel();
         
         return "View";
     }
@@ -485,5 +492,9 @@ public class AgrupamentoController implements Serializable {
     public String viewAgrupamento(Agrupamento agrupamento) {
         current = agrupamento;
         return "/agrupamento/View";
+    }
+	public void viewAux() {
+        current = (Agrupamento) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
     }
 }
