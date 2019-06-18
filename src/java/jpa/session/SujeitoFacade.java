@@ -5,6 +5,7 @@
  */
 package jpa.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,17 @@ public class SujeitoFacade extends AbstractFacade<Sujeito> {
     public SujeitoFacade() {
         super(Sujeito.class);
     }
+    
+        public List getOriginal(){
+        return em.createNamedQuery("Artefactos.findOriginal").getResultList();
+    }
+    
+    public int countOriginal(){
+        return getOriginal().size();
+    }
 
+     public void destroySujeito(Sujeito Sujeito){
+       
+       
+    }
 }
