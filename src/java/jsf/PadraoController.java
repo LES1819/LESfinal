@@ -1,9 +1,9 @@
 package jsf;
 
+import jpa.session.PadraoFacade;
 import jpa.entities.Padrao;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
-import jpa.session.PadraoFacade;
 import static jsf.util.SessionUtils.getUserId;
 
 import java.io.Serializable;
