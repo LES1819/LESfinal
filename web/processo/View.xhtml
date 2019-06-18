@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewProcessoTitle}"></h:outputText>
         </ui:define>
@@ -29,53 +29,56 @@
 
 
 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                                   
                     <f:facet name="header">
                         <h:outputText value="Nome: "/>
-                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.nome}"/>
+                        <h:outputText class="outputtextstyle" value="#{processoController.selected.nome}"/>
                     </f:facet>
                 </h:dataTable>
 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+               <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                  
                     <f:facet name="header">
                         <h:outputText value="Descrição: "/>
-                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.descricao}"/>
+                        <h:outputText class="outputtextstyle" value="#{processoController.selected.descricao}"/>
                     </f:facet>
                 </h:dataTable>
 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+               <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                                    
                     <f:facet name="header">
                         <h:outputText value="Criado por: "/>
-                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.utilizadoridUtilizador.nome}"/>
+                        <h:outputText class="outputtextstyle" value="#{processoController.selected.utilizadoridUtilizador.nome}"/>
                     </f:facet>
                 </h:dataTable>
 
                               
                 <h:form>
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+               <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                                
                     <f:facet name="header">
                         <h:outputText value="Atividades: "/>
                         <ui:repeat value="#{processoController.getAssociatedAtividade()}" var="item3" varStatus="status">
                             <h:commandLink action="#{atividadeController.viewCopiedAtividade(item3)}" value="#{item3.nome}" rendered="#{status.first}"/>
                             <h:commandLink action="#{atividadeController.viewCopiedAtividade(item3)}" value=", #{item3.nome}" rendered="#{!status.first}"/>
                             <h:commandLink action="#{atividadeController.destroyCopy(item3)}">
-                                    <i class="fa fa-times" style="color:red;"></i>
+                                    <i class="fa fa-times"></i>
                             </h:commandLink>
                         </ui:repeat>
                     </f:facet>
                 </h:dataTable>
                 </h:form>
                 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                               
                     <f:facet name="header">
                         <h:outputText value="Data de criação: "/>
-                        <h:outputText style="padding-left: 5%" value="#{processoController.selected.dataCriacao}">
+                        <h:outputText  class="outputtextstyle" value="#{processoController.selected.dataCriacao}">
                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
                     </f:facet>
                 </h:dataTable>
                 
-                <h:button class="check btn btn-primary" outcome="#{processoController.prepareList()}" value="Voltar"/>
+                <h:button class="check btn btn-primary flexcontainer" outcome="#{processoController.prepareList()}" value="Voltar"/>
+                <div class="btn-group right">
+                <h:button outcome="#{atividadeController.prepareAssociate(processoController.selected)}" class="btn btn-success flexcontainer" value="Associar Atividades"/>
+                 </div>
             </div>
 
             <br/>
@@ -102,10 +105,6 @@
                     </div>
                 </div>
             </div>
-            <div class="btn-group right">
-                <h:button outcome="#{atividadeController.prepareAssociate(processoController.selected)}" class="btn btn-success" value="Associar Atividades"/>
-            </div>
-
         </ui:define>
     </ui:composition>
 
