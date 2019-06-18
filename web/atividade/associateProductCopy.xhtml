@@ -5,41 +5,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
-
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.CreateAtividadeTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListProdutoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
+            <br/>         
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                <br/>
-                <div class="row">
-                <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/><i class="fa fa-arrow-right seta"></i> Associar Produtos à Atividade: #{atividadeController.selected.nome}
-            </div>
-                <div class="btn-group right">
-
-
-                    <div class="btn-group mr-2 distancia_top_left">
-                        <div class="btn-group dropleft" role="group">
-                            
-                            <div class="dropdown-menu">
-                                <!-- Dropdown menu links -->
-
-                                <div class="col">
-                                    <button name="tipo" type="submit" class="dropdown-item" >drop</button>
-                                </div>
-
-                            </div>
-                        </div>
-                        <h:commandLink action="#{produtoController.associateAllProducts(1)}"><button class="btn btn-primary" disabled="true">Associar</button></h:commandLink>                                   
+                <div class="col-md-12">
+                    <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/><i class="fa fa-arrow-right seta"></i> Associar Produtos à Atividade: #{atividadeController.selected.nome}
+                    <div class="btn-group right">                       
+                        <h:commandLink action="#{produtoController.associateAllProducts(0)}"><button class="btn btn-primary" disabled="true">Associar</button> </h:commandLink>                                
                     </div>                               
                 </div>
                 <br/>
-                
+                <br/>
+                <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <br/>
                 <div>
             <table id="example" class="display">
                
@@ -54,7 +38,7 @@
                         <th data-index="1">Nome</th>
                         <th data-index="2">Descrição</th>
                         <th data-index="3">Tipo</th>
-                        <th data-index="4">Criado por</th>
+                        <th data-index="4">Utilizador</th>
                         <th data-index="5">Data de criação</th>
                     </tr>
                 </thead>
@@ -84,7 +68,9 @@
                 </tbody>
             </table>
         </div>
+                <div class="col-md-12">
                 <h:button class="check btn btn-primary" outcome="/atividade/View" value="Voltar"/>
+                </div>
             </h:form>
             <h:outputScript library="javascript" name="checkboxes.js"/>
             <h:outputScript library="javascript" name="filterAssociateProducts.js"/>
