@@ -21,7 +21,6 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import jpa.entities.Utilizador;
-import jpa.session.UtilizadorDAO;
 import jsf.util.SessionUtils;
 
 @Named("utilizadorController")
