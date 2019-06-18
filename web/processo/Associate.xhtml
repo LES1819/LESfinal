@@ -5,41 +5,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.CreateProcessoTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListProcessoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form styleClass="jsfcrud_list_form" >
-                <br/>
-                <div class="row">
-                <h:link outcome="/processo/List" value="Lista de Processos"/> <i class="fa fa-arrow-right seta"></i><h:link outcome="/processo/View" value="Ver Processo: #{processoController.selected.nome}"/> <i class="fa fa-arrow-right seta"></i>Associar Atividades ao Processo: #{processoController.selected.nome}
-            </div>
-                <div class="btn-group right">
-
-
-                    <div class="btn-group mr-2 distancia_top_left">
-                        <div class="btn-group dropleft" role="group">
-                            <button type="button" id="select" class="check btn btn-secondary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <!-- Dropdown menu links -->
-
-                                <div class="col">
-                                    <button name="tipo" type="submit" class="dropdown-item" ></button>
-                                </div>
-
-                            </div>
-                        </div>
-                        <h:commandButton type="submit" class="btn btn-primary" value="associar" action="#{atividadeController.associateSelectedList()}" disabled="false"/>                                   
+            <br/>         
+            <h:form styleClass="jsfcrud_list_form">
+                <div class="col-md-12">
+                <h:link outcome="/processo/List" value="Lista de Processos"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Processo: #{processoController.selected.nome}"/><i class="fa fa-arrow-right seta"></i>Associar atividades ao Processo: #{processoController.selected.nome}                       
+                    <div class="btn-group right">                       
+                        <h:commandLink action="#{atividadeController.associateSelectedList()}"><button class="btn btn-primary" disabled="true">Associar</button> </h:commandLink>                                
                     </div>                               
                 </div>
-                
+                <br/>
+                <br/>
+                <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <br/>
                 <div>
                     <table id="example" class="display">
 
@@ -125,15 +109,10 @@
                             </ui:repeat>
                         </tbody>
                     </table>
-                </div>
-                
-                
+                </div>               
+                <div class="col-md-12">
                 <h:button class="check btn btn-primary" outcome="/processo/View" value="Voltar"/>
-        
-            
-            
-           
-            
+                </div>                   
                 </h:form>
             <h:outputScript library ="javascript" name ="checkboxes.js" />
             <h:outputScript library ="javascript" name ="filterAssociateProcesses.js" />
