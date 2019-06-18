@@ -10,31 +10,29 @@
             <h:outputText value="#{bundle.EditPerfilTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditPerfilLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{perfilController.selected.id}" title="#{bundle.EditPerfilTitle_id}" required="true" requiredMessage="#{bundle.EditPerfilRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.EditPerfilLabel_nome}" for="nome" />
-                    <h:inputText id="nome" value="#{perfilController.selected.nome}" title="#{bundle.EditPerfilTitle_nome}" required="true" requiredMessage="#{bundle.EditPerfilRequiredMessage_nome}"/>
-                    <h:outputLabel value="#{bundle.EditPerfilLabel_dataCriacao}" for="dataCriacao" />
-                    <h:inputText id="dataCriacao" value="#{perfilController.selected.dataCriacao}" title="#{bundle.EditPerfilTitle_dataCriacao}" required="true" requiredMessage="#{bundle.EditPerfilRequiredMessage_dataCriacao}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                </h:panelGrid>
-                <h:commandLink action="#{perfilController.update}" value="#{bundle.EditPerfilSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{bundle.EditPerfilViewLink}"/>
-                <br />
-                <h:commandLink action="#{perfilController.prepareList}" value="#{bundle.EditPerfilShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.EditPerfilIndexLink}" />
-            </h:form>
+            <br/>
+            <div class="row">
+                <h:link outcome="/perfil/List" value="Lista de perfil"/><i class="fa fa-arrow-right seta"></i>Editar Produto: #{perfilController.selected.nome}
+            </div>
+            <div class="row tabela">
+                <h:form class="width">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+
+                    <div class="row form-group row ajustar_caixas2" >
+                        <h:outputLabel value="#{bundle.CreatePerfilLabel_nome}" for="nome" class="col-md-2 outputlabelstyle" />
+                        <div class="col desc">
+                            <h:inputText class="form-control" id="nome" value="#{perfilController.selected.nome}" title="#{bundle.CreatePerfilTitle_nome}" required="true" requiredMessage="#{bundle.CreatePerfilRequiredMessage_nome}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group right">
+                        <h:commandButton type="submit" class="btn btn-primary" value="Editar" action="#{perfilController.update()}" />
+                        <h:button class="btn btn-danger mudar5" outcome="#{perfilController.prepareList()}" value="Cancelar" />
+                    </div>
+                </h:form>
+            </div>
         </ui:define>
     </ui:composition>
 
 </html>
+

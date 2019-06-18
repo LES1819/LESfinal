@@ -10,35 +10,65 @@
             <h:outputText value="#{bundle.ViewPerfilTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewPerfilLabel_id}"/>
-                    <h:outputText value="#{perfilController.selected.id}" title="#{bundle.ViewPerfilTitle_id}"/>
-                    <h:outputText value="#{bundle.ViewPerfilLabel_nome}"/>
-                    <h:outputText value="#{perfilController.selected.nome}" title="#{bundle.ViewPerfilTitle_nome}"/>
-                    <h:outputText value="#{bundle.ViewPerfilLabel_dataCriacao}"/>
-                    <h:outputText value="#{perfilController.selected.dataCriacao}" title="#{bundle.ViewPerfilTitle_dataCriacao}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{perfilController.destroyAndView}" value="#{bundle.ViewPerfilDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewPerfilEditLink}"/>
-                <br />
-                <h:commandLink action="#{perfilController.prepareCreate}" value="#{bundle.ViewPerfilCreateLink}" />
-                <br />
-                <h:commandLink action="#{perfilController.prepareList}" value="#{bundle.ViewPerfilShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewPerfilIndexLink}"/>
+            <br>
 
-            </h:form>
+            </br>
+            <div class="col-md-12">
+                <h:link outcome="/perfil/List" value="Lista de utilizadores"></h:link><i class="fa fa-arrow-right seta"></i> Ver Perfil: #{perfilController.selected.nome}
+                <div class="btn-group right">
+                    <h:form>
+                        <h:commandButton class="btn btn-primary" action="Edit" value="Editar"/>
+                    </h:form>
+                    ´<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                </div>
+                <br/>
+                <br/>
+
+                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ViewPerfilLabel_noo}"/>
+                        <h:outputText value="#{perfilController.selected.nome}" title="#Nome:"/>
+                    </f:facet>
+                </h:dataTable>
+
+                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ViewUtilizadorLabel_dataCriacao}"/>
+                        <h:outputText value="#{perfilrController.selected.dataCriacao}" title="Data de Criação">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </f:facet>
+                </h:dataTable>
+
+                <br/>
+            </div>
+
+
+            <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">#{bundle.ViewApagarPerfil} #{utilizadorController.selected.nome}?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>#{bundle.ViewApagarPerfil2}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <h:form>
+                                <h:commandButton class="btn btn-danger" action="#{perfilController.destroy()}" value="Apagar"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </ui:define>
     </ui:composition>
 
 </html>
+
