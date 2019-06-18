@@ -13,7 +13,7 @@ import jpa.entities.Frase;
 
 /**
  *
- * @author andre
+ * @author Catarina
  */
 @Stateless
 public class FraseFacade extends AbstractFacade<Frase> {

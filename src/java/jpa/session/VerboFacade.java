@@ -13,7 +13,7 @@ import jpa.entities.Verbo;
 
 /**
  *
- * @author andre
+ * @author Catarina
  */
 @Stateless
 public class VerboFacade extends AbstractFacade<Verbo> {
