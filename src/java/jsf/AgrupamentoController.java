@@ -1,6 +1,6 @@
 package jsf;
 
-import static jsf.util.SessionUtils.getUserId;
+import static com.journaldev.jsf.util.SessionUtils.getUserId;
 import jpa.entities.Agrupamento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
