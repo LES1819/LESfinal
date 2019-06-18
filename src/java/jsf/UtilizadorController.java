@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,6 +19,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
+import jpa.entities.Utilizador;
+import jpa.session.UtilizadorDAO;
+import jsf.util.SessionUtils;
 
 @Named("utilizadorController")
 @SessionScoped
@@ -29,6 +34,35 @@ public class UtilizadorController implements Serializable {
     private jpa.session.UtilizadorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    /**
+    private UtilizadorDAO utilizadorDAO = new UtilizadorDAO();
+    private Utilizador utilizador = new Utilizador();
+
+    public String login() {
+        utilizador = utilizadorDAO.getUtilizador(utilizador.getNome(), utilizador.getPassword());
+        if (utilizador == null) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!",
+                            "Erro no Login!"));
+            return null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!",
+                            "DONNE!"));
+            return null;
+        }
+    }
+
+    public Utilizador getUsuario() {
+        return utilizador;
+    }
+
+    public void setUtilizador(Utilizador utilizador) {
+        this.utilizador = utilizador;
+    }*/
 
     public UtilizadorController() {
     }
@@ -74,6 +108,11 @@ public class UtilizadorController implements Serializable {
         return "View";
     }
 
+    public String prepareLogin() {
+        current = new Utilizador();
+        return "login";
+    }
+
     public String prepareCreate() {
         current = new Utilizador();
         selectedItemIndex = -1;
@@ -88,9 +127,9 @@ public class UtilizadorController implements Serializable {
 
             if (j > 0) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nomeUtilizadorExists"));
-            } else if(k > 0){
+            } else if (k > 0) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("emailUtilizadorExists"));
-                
+
             } else {
                 getFacade().create(current);
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("UtilizadorCreated"));
@@ -113,6 +152,38 @@ public class UtilizadorController implements Serializable {
         return false;
     }
 
+    public String validateUsernamePassword(String nome, String password) {
+        try {
+            int k = getFacade().validate(nome, password);
+            if (k>0) {
+                Integer id = getFacade().findID(nome);
+                HttpSession session = SessionUtils.getSession();
+                session.setAttribute("username", nome);
+                session.setAttribute("idUtilizador", id);
+                return "index";
+            } else {
+                FacesContext.getCurrentInstance().addMessage(
+                        null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "Incorrect Username and Passowrd",
+                                "Please enter correct username and Password"));
+                return "login";
+            }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+
+    }
+    
+    public String sessionName(){
+        return SessionUtils.getUserName();
+    }
+    
+    public String sessionID(){
+        return SessionUtils.getUserId();
+    }
+
     public String prepareEdit() {
         current = (Utilizador) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -125,12 +196,12 @@ public class UtilizadorController implements Serializable {
             String email = getFacade().find(current.getIdUtilizador()).getEmail();
             int j = getFacade().countRepeatednome(current.getNome());
             int k = getFacade().countRepeatedemail(current.getEmail());
-    
+
             if (j > 1) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("nomeUtilizadorExists"));
-            } else if(k > 1){
+            } else if (k > 1) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/resources/Bundle").getString("emailUtilizadorExists"));
-                
+
             } else {
                 getFacade().edit(current);
                 JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("UtilizadorUpdated"));
@@ -203,7 +274,7 @@ public class UtilizadorController implements Serializable {
     private void recreatePagination() {
         pagination = null;
     }
-    
+
     public String next() {
         getPagination().nextPage();
         recreateModel();
