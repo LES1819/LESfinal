@@ -21,8 +21,7 @@
     </h:head>
 
     <h:body>
-        <div class="row">
-            <nav class="navbar navbar-dark bg-dark  navbar-expand-md fixed-top font-weight-bold">
+                <nav class="navbar navbar-dark bg-dark  navbar-expand-md fixed-top font-weight-bold">
                 <a class="navbar-brand nav-link p-2" href="#">
                     Análise de Dados - Gestão de Frases
                 </a>
@@ -67,23 +66,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 &nbsp;<i class="fas fa-sign-in-alt"></i>&nbsp; Logout
-                            </a>
+                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
-        </div>
-        <div>
-            <ui:insert name="content">
-
-            </ui:insert>
+       <br/>
+        <div class="row">                
+            
+            <div class="col-md-12">
+                <ui:insert name="content"></ui:insert>
+            </div>
         </div>
         <div class="col-12">
             <div class="footer" style="text-align:center;">&copy; 2019 Laboratório de Engenharia de Software
                 <span style="float:right; padding-right: 5%">Designed By: Turno de 5ª-feira</span>
             </div>
         </div>
-
     </h:body>
 
 </html>
