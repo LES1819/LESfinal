@@ -4,6 +4,53 @@
  * and open the template in the editor.
  */
 
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+jQuery.fn.dataTable.render.ellipsis = function ( cutoff, wordbreak, escapeHtml ) {
+    var esc = function ( t ) {
+        return t
+            .replace( /&/g, '&amp;' )
+            .replace( /</g, '&lt;' )
+            .replace( />/g, '&gt;' )
+            .replace( /"/g, '&quot;' );
+    };
+ 
+    return function ( d, type, row ) {
+        // Order, search and type get the original data
+        if ( type !== 'display' ) {
+            return d;
+        }
+ 
+        if ( typeof d !== 'number' && typeof d !== 'string' ) {
+            return d;
+        }
+ 
+        d = d.toString(); // cast numbers
+ 
+        if ( d.length <= cutoff ) {
+            return d;
+        }
+ 
+        var shortened = d.substr(0, cutoff-1);
+ 
+        // Find the last white space character in the string
+        if ( wordbreak ) {
+            shortened = shortened.replace(/\s([^\s]*)$/, '');
+        }
+ 
+        // Protect against uncontrolled HTML input
+        if ( escapeHtml ) {
+            shortened = esc( shortened );
+        }
+ 
+        return '<span class="ellipsis" title="'+esc(d)+'">'+shortened+'&#8230;</span>';
+    };
+};
 $(document).ready(function() {
     // Setup - add a text input to each footer cell
     $('#example thead tr').clone(true).appendTo( '#example thead' );
@@ -25,6 +72,7 @@ $(document).ready(function() {
     $('#example thead tr:eq(1) th:eq(5)').html("");
  
     var table = $('#example').DataTable( {
+        responsive: true,
         orderCellsTop: true,
         fixedHeader: true,
         order: [],
@@ -44,9 +92,10 @@ $(document).ready(function() {
         "previous":   "Anterior"
         }
         },
-        "columnDefs": [ {
-      "targets"  : 'no-sort',
-      "orderable": false
-    }]
+        "columnDefs": [ 
+            {targets: 2,render: $.fn.dataTable.render.ellipsis( 15, true )}, 
+            {targets: 'no-sort',orderable: false}
+        ]
 } );
 } );
+

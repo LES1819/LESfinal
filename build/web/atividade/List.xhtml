@@ -11,99 +11,100 @@
         </ui:define>
         <ui:define name="content">
             <br/>
-            <div class="row">
-                <h:outputText value="Lista de Atividades"/>
-            </div>
-            <h:form styleClass="jsfcrux\d_list_form">
+                <h:form styleClass="jsfcrux\d_list_form">
+                    <div class="col-md-12">
+                        <h:outputText value="Lista de Atividades"/>
+                        <div class="btn-group right">
+                            <h:commandButton class="check btn btn-primary" action="#{atividadeController.prepareCreate}" value="Criar"/>
 
-                <div class="btn-group right">
-                    <h:commandButton class="check btn btn-primary" action="#{atividadeController.prepareCreate}" value="Criar"/>
+                            <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
 
-                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="false"><span>Apagar</span></button>
-
-                </div> 
-                <br />
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-
-                <div>
-                    <table id="example" class="display">
-
-                        <thead>
-
-                            <tr>
-
-                                <th class="no-sort" data-index="0">
-
-                                    <h:selectBooleanCheckbox onclick="toggleAll2()"/>
-                                </th>
-                                <th data-index="1">Nome</th>
-                                <th data-index="2">Descrição</th>
-                                <th data-index="3">Criado por</th>
-                                <th data-index="4">Data de criação</th>
-                                <th class="no-sort" data-index="5">Associar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ui:repeat value="#{atividadeController.getOriginalAtividadeItemsemp()}" var="item">
-                                <tr>
-                                    <td style="text-align: center;">
-                                        <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{atividadeController.selectedItems[item]}"/>
-                                    </td>
-                                    <td>
-                                        #{item.nome} <h:commandLink action="#{atividadeController.view(item)}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{atividadeController.edit(item)}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
-                                    </td>
-                                    <td>
-                                        #{item.descricao}
-                                    </td>
-                                    <td>
-                                        #{item.utilizadoridUtilizador.nome}
-                                    </td>
-                                    <td>
-                                        #{produtoController.dateToString(item.dataCriacao)}
-                                    </td>
-                                    <td>
-                                        <h:commandLink class="check btn btn-outline-success"  action="#{papelController.prepareAssociate(item,0)}"><i class="fas fa-user-tag"></i>&nbsp; Papéis
-                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
-                                        </h:commandLink>
-                                        <h:outputText value=" "/>
-                                        <h:commandLink class="check btn btn-outline-success"  action="#{produtoController.prepareAssociate(item,0)}"><i class="fas fa-book"></i>&nbsp; Produtos
-                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
-                                        </h:commandLink>
-                                        <h:outputText value=" "/>
-                                        <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"><i class="fas fa-project-diagram"></i>&nbsp;  Padrões
-                                            <f:actionListener binding="#{atividadeController.viewAux(item)}" />
-                                        </h:commandLink>
-                                    </td>
-                                </tr>
-                            </ui:repeat>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">#{bundle.ListaApagarAtividade2}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p id="modalid">#{bundle.ListaApagarAtividade}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <h:commandButton class="btn btn-primary" action="#{atividadeController.destroyActivities()}" value="Apagar"></h:commandButton>
-                            </div>
                         </div>
                     </div>
-                </div>
+                        <br/>
+                        <br />
+                        <h:panelGroup id="messagePanel" layout="block">
+                            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                        </h:panelGroup>
+                        <br/>
+                        
+                        <div>
+                            <table id="example" class="display">
 
-            </h:form>
+                                <thead>
 
+                                    <tr>
+
+                                        <th class="no-sort" data-index="0">
+
+                                            <h:selectBooleanCheckbox onclick="toggleAll2()"/>
+                                        </th>
+                                        <th data-index="1">Nome</th>
+                                        <th data-index="2">Descrição</th>
+                                        <th data-index="3">Criado por</th>
+                                        <th data-index="4">Data de criação</th>
+                                        <th class="no-sort" data-index="5">Associar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{atividadeController.getOriginalAtividadeItemsemp()}" var="item">
+                                        <tr>
+                                            <td class="text-center">
+                                                <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{atividadeController.selectedItems[item]}"/>
+                                            </td>
+                                            <td>
+                                                #{item.nome} <h:commandLink action="#{atividadeController.view(item)}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{atividadeController.edit(item)}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                                            </td>
+                                            <td>
+                                                #{item.descricao}
+                                            </td>
+                                            <td>
+                                                #{item.utilizadoridUtilizador.nome}
+                                            </td>
+                                            <td>
+                                                #{produtoController.dateToString(item.dataCriacao)}
+                                            </td>
+                                            <td>
+                                                <h:commandLink class="check btn btn-outline-success"  action="#{papelController.prepareAssociate(item,0)}"><i class="fas fa-user-tag"></i>&nbsp; Papéis
+                                                    <f:actionListener binding="#{atividadeController.viewAux(item)}" />
+                                                </h:commandLink>
+                                                <h:outputText value=" "/>
+                                                <h:commandLink class="check btn btn-outline-success"  action="#{produtoController.prepareAssociate(item,0)}"><i class="fas fa-book"></i>&nbsp; Produtos
+                                                    <f:actionListener binding="#{atividadeController.viewAux(item)}" />
+                                                </h:commandLink>
+                                                <h:outputText value=" "/>
+                                                <h:commandLink class="check btn btn-outline-success"  action="#{padraoController.prepareAssociate(item,0)}"><i class="fas fa-project-diagram"></i>&nbsp;  Padrões
+                                                    <f:actionListener binding="#{atividadeController.viewAux(item)}" />
+                                                </h:commandLink>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+
+                        <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">#{bundle.ListaApagarAtividade2}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="modalid">#{bundle.ListaApagarAtividade}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <h:commandButton class="btn btn-primary" action="#{atividadeController.destroyActivities()}" value="Apagar"></h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                  
+                </h:form>
+       
 
             <h:outputScript library ="javascript" name ="checkboxes.js" />
             <h:outputScript library ="javascript" name ="filterActivities.js" />

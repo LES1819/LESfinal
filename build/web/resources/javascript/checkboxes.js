@@ -265,3 +265,29 @@ function togglefrase(){
            document.getElementsByClassName("check btn btn-danger")[0].disabled = true;
 	}
 }
+
+function toggleverbo(){
+        var checkboxes = document.getElementsByClassName('check[]');
+        var checked = 0;
+        for(var i = 0; i < checkboxes.length; i++){
+            if(checkboxes[i].checked === true){
+                checked++;
+            }
+            if(checked > 1){
+               break;
+            }
+        }
+	if(checked === 1){
+            document.getElementsByClassName("check btn btn-danger")[0].disabled = false;
+            document.getElementById("exampleModalLabel").innerHTML = "Apagar o Verbo?";
+            document.getElementById("modalid").innerHTML = "Irá apagar as frases que contenham este verbo.";
+	}
+        else if(checked > 1){
+            document.getElementsByClassName("check btn btn-danger")[0].disabled = false;
+            document.getElementById("exampleModalLabel").innerHTML = "Apagar os Verbos?";
+            document.getElementById("modalid").innerHTML = "Irá apagar as frases que contenham este verbo.";
+        }
+	else{
+           document.getElementsByClassName("check btn btn-danger")[0].disabled = true;
+	}
+}

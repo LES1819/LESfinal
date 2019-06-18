@@ -25,31 +25,31 @@
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                        
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">                                        
 
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ListPapelTitle_nome}:"/>
-                        <h:outputText style="padding-left: 5%" value="#{papelController.selected.nome}"/>
+                        <h:outputText value="#{bundle.ListPapelTitle_nome}: "/>
+                        <h:outputText class="outputtextstyle" value="#{papelController.selected.nome}"/>
                     </f:facet>   
                 </h:dataTable> 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">   
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ListPapelTitle_descricao}:"/>
-                        <h:outputText style="padding-left: 5%" value="#{papelController.selected.descricao}"/>
+                        <h:outputText value="#{bundle.ListPapelTitle_descricao}: "/>
+                        <h:outputText class="outputtextstyle" value="#{papelController.selected.descricao}"/>
                     </f:facet>
-                </h:dataTable> 
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                                     
+                </h:dataTable>
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">   
                     <f:facet name="header">
-                        <h:outputText value="Criado por:"/>                           
-                        <h:outputText style="padding-left: 5%" value="#{papelController.selected.utilizadoridUtilizador.nomeCompleto}">
+                        <h:outputText value="Criado por: "/>                           
+                        <h:outputText class="outputtextstyle" value="#{papelController.selected.utilizadoridUtilizador.nomeCompleto}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>                           
                     </f:facet>                                                                                                                                                                            
                 </h:dataTable>
-                <h:dataTable class="table" border="0" cellpadding="2" cellspacing="0" style="margin-top:1%; width: 78%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">                                                
+                <h:dataTable class="table dataTable2" border="0" cellpadding="2" cellspacing="0">   
                     <f:facet name="header">
-                        <h:outputText value="Data de criação:"/>
-                        <h:outputText style="padding-left: 5%" value="#{papelController.selected.dataCriacao}">
+                        <h:outputText value="Data de criação: "/>
+                        <h:outputText class="outputtextstyle" value="#{papelController.selected.dataCriacao}">
                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
                     </f:facet>                                                    

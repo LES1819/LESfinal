@@ -5,135 +5,145 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_2.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewAgrupamentoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form style="margin-top: 8%;">
-                <div style="float: right">
-                    <h:link class="btn btn-primary" outcome="Edit" value="#{bundle.ViewAgrupamentoEditLink}"/>
-                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
-                </div>
-                
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewAgrupamentoLabel_nome}"/>
-                    <h:outputText value="#{agrupamentoController.selected.nome}" title="#{bundle.ViewAgrupamentoTitle_nome}"/>
-                    <h:outputText value="#{bundle.ViewAgrupamentoLabel_descricao}"/>
-                    <h:outputText value="#{agrupamentoController.selected.descricao}" title="#{bundle.ViewAgrupamentoTitle_descricao}"/>
-                    <h:outputText value="#{bundle.ViewAgrupamentoLabel_dataCriacao}"/>
-                    <h:outputText value="#{agrupamentoController.selected.dataCriacao}" title="#{bundle.ViewAgrupamentoTitle_dataCriacao}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                    <h:outputText value="#{bundle.ViewAgrupamentoLabel_utilizadoridUtilizador}"/>
-                    <h:outputText value="#{agrupamentoController.selected.utilizadoridUtilizador.nome}" title="#{bundle.ViewAgrupamentoTitle_utilizadoridUtilizador}"/>
-                </h:panelGrid>
-                <br />
-                
-             
-                <br />
-                <h3>Frases associadas</h3>
-                <h:dataTable value="#{agrupamentoController.frases}" var="item_frase" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_sujeitoidSujeito}"/>
-                                
-                            </f:facet>
-                            <h:outputText value="#{item_frase.sujeitoidSujeito.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_verbo}"/>
-                            
-                            </f:facet>
-                            <h:outputText value="#{item_frase.verbo.verboPK.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_destinatario}"/>
-                           
-                            </f:facet>
-                            <h:outputText value="#{item_frase.destinatario}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListFraseTitle_datCriacao}"/>
-                            
-                            </f:facet>
-                            <h:outputText value="#{item_frase.datCriacao}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{agrupamentoController.desassociarFrase(item_frase.idFrase)}" value="Desassociar"/>
-                            <h:outputText value=" "/>
-                        </h:column>
-                    </h:dataTable>
-                <br />
-                <br />
-                <h3>Padroes associados</h3>
-                <h:dataTable value="#{agrupamentoController.padroes}" var="item_padrao" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        
-                       
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPadraoTitle_nome}"/>
-                            </f:facet>
-                            <h:outputText value="#{item_padrao.nome}"/>
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPadraoTitle_descricao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item_padrao.descricao}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPadraoTitle_dataCriacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item_padrao.dataCriacao}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{agrupamentoController.desassociarPadrao(item_padrao.idPadrao)}" value="Desassociar"/>
-                            <h:outputText value=" "/>
-                        </h:column>
+
+            <br/>
+            <h:form>
+
+                <div class="col-md-12">
+                    <h:link outcome="/agrupamento/List" value="Lista de Agrupamentos"></h:link> <i class="fa fa-arrow-right seta"></i> Ver Agrupamento: #{agrupamentoController.selected.nome}
+                    <div class="btn-group right">
+                        <h:link class="btn btn-primary" outcome="Edit" value="#{bundle.ViewAgrupamentoEditLink}" />
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"><span>Apagar</span></button>
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Nome: "/>
+                            <h:outputText style="padding-left: 5%" value="#{agrupamentoController.selected.nome}"/>
+                        </f:facet>
                     </h:dataTable>
 
-                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Apagar o Agrupamento?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p id="modalid">Irá apagar este agrupamento e as suas associações as frases e padrões.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <h:commandButton class="btn btn-primary" action="#{agrupamentoController.destroyAgrup()}" value="Apagar"></h:commandButton>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Descrição: "/>
+                            <h:outputText style="padding-left: 5%" value="#{agrupamentoController.selected.descricao}"/>
+                        </f:facet>
+                    </h:dataTable>
+
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Data de Criação: "/>
+                            <h:outputText style="padding-left: 5%" value="#{fraseController.dateToString(agrupamentoController.selected.dataCriacao)}"/>
+                        </f:facet>
+                    </h:dataTable>
+
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Utilizador: "/>
+                            <h:outputText style="padding-left: 5%" value="#{agrupamentoController.selected.utilizadoridUtilizador.nome}"/>
+                        </f:facet>
+                    </h:dataTable>
+
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Frases Associadas: "/>
+                            <br/>
+                            <h:dataTable value="#{agrupamentoController.frases}" var="item_frase" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="----#{bundle.ListFraseTitle_sujeitoidSujeito}----"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item_frase.sujeitoidSujeito.nome}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="----#{bundle.ListFraseTitle_verbo}----"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item_frase.verbo.verboPK.nome}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="----#{bundle.ListFraseTitle_destinatario}----"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item_frase.destinatario}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="&nbsp;"/>
+                                    </f:facet>
+                                    <h:commandLink action="#{agrupamentoController.desassociarFrase(item_frase.idFrase)}" value="Desassociar"/>
+                                    <h:outputText value=" "/>
+                                </h:column>
+
+                            </h:dataTable>
+                        </f:facet>
+                    </h:dataTable>
+                    
                 
+                    <h:dataTable class="table boxes" border="0" cellpadding="2" cellspacing="0">                                                
+                        <f:facet name="header">
+                            <h:outputText value="Padrões: "/>
+                            <ui:repeat value="#{agrupamentoController.padroes}" var="item_padrao" >
+                                <h:outputText value="#{item_padrao.nome}" rendered="#{status.first}" />
+                                <h:outputText value=", #{item_padrao.nome}"  rendered="#{!status.first}"/> 
+                               
+                                <h:commandLink action="#{agrupamentoController.desassociarPadrao(item_padrao.idPadrao)}" >
+                                    <i class="fa fa-times" style="color:red;"></i>
+                                    <h:outputText value=" "/>
+                                </h:commandLink>
+                            </ui:repeat>
+                        </f:facet>
+                    </h:dataTable>
+                        <h:button class="check btn btn-primary" outcome="/agrupamento/List" value="Voltar"/>
+                        <div class="btn-group right">
+   
+                            <h:button outcome="#{fraseController.prepareAssociate(agrupamentoController.selected)}" class="btn btn-success" value="Associar Frases"/>
+                        </div>
+
+                    
+
+                </div>
+                <br/>
+
+
+                
+
+
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Apagar o Agrupamento?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modalid">Irá apagar este agrupamento e as suas associações as frases e padrões.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <h:commandButton class="btn btn-primary" action="#{agrupamentoController.destroyAgrup()}" value="Apagar"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+
             </h:form>
-            
+
+
             <br/>
             <br/>
         </ui:define>

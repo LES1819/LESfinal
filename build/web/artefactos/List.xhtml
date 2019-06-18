@@ -3,60 +3,103 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     >
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListArtefactosTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
+    <ui:composition template="/template_2.xhtml">
+        <ui:define name="title">Artefacto</ui:define>
+        
+        <ui:define name="content">
+            <br/>
+            <h:form styleClass="jsfcrux\d_list_form">    
+                <div class="col-md-12">
+                    <h:outputText value="Lista de Artefactos"/>
+                
+                <div class="btn-group right">
+                    <h:commandButton class="check btn btn-primary" action="#{artefactosController.prepareCreate}" value="Criar"/>
+
+                    <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
+                </div>
+                </div>
+                <br/>
+                <br/>
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListArtefactosEmpty}" rendered="#{artefactosController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{artefactosController.items.rowCount > 0}">
-                    <h:outputText value="#{artefactosController.pagination.pageFirstItem + 1}..#{artefactosController.pagination.pageLastItem + 1}/#{artefactosController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{artefactosController.previous}" value="#{bundle.Previous} #{artefactosController.pagination.pageSize}" rendered="#{artefactosController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{artefactosController.next}" value="#{bundle.Next} #{artefactosController.pagination.pageSize}" rendered="#{artefactosController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{artefactosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArtefactosTitle_idArtefactos}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idArtefactos}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArtefactosTitle_nome}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nome}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArtefactosTitle_descricao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descricao}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{artefactosController.prepareView}" value="#{bundle.ListArtefactosViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{artefactosController.prepareEdit}" value="#{bundle.ListArtefactosEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{artefactosController.destroy}" value="#{bundle.ListArtefactosDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{artefactosController.prepareCreate}" value="#{bundle.ListArtefactosCreateLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ListArtefactosIndexLink}"/>
-            </h:form>
+                <br/>
+        <div>
+            <table id="example" class="display">
+               
+                <thead>
+             
+                    <tr>
+                        
+                        <th class="no-sort" data-index="0">
+                            
+                            <h:selectBooleanCheckbox onclick="toggleAll2()"/>
+                        </th>
+                        <th data-index="1">Nome</th>
+                        <th data-index="2">Descrição</th>                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:repeat value="#{artefactosController.getItemsList()}" var="item">
+                        <tr>
+                            <td class="text-center">
+                                <h:selectBooleanCheckbox class="check[]" onclick="toggleproduto()" value="#{artefactosController.selectedItems[item]}"/>
+                            </td>
+                            <td>
+                                #{item.nome} <h:commandLink action="#{artefactosController.view(item)}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{artefactosController.edit(item)}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
+                            </td>
+                            <td>
+                                #{item.descricao}
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+        </div>
+                
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Irá apagar este artefacto</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apagar o artefacto(s)?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <h:form>
+                                <h:commandButton class="btn btn-primary" action="#{artefactosController.destroyArtefactoses()}" value="Apagar"/>
+                            </h:form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+                
+                <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    <h:commandButton class="btn btn-primary" action="#{artefactosController.destroyArtefactoses()}" value="Apagar"></h:commandButton>
+    </div>
+    </div>
+
+</div>
+            </h:form>        
+            <h:outputScript library ="javascript" name ="checkboxes.js" />
+            <h:outputScript library ="javascript" name ="filterArtefacts.js" />
         </ui:define>
     </ui:composition>
-
 </html>

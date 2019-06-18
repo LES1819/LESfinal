@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_2.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ListPadraoTitle}"></h:outputText>
         </ui:define>
@@ -16,9 +16,10 @@
             </div>
             <h:form styleClass="jsfcrud_list_form">
                 <div class="btn-group right">
+                    
                     <h:commandButton class="check btn btn-primary" action="#{padraoController.prepareCreate}" value="Criar"/>
 
-                    <h:commandButton class="check btn btn-danger" action="#{padraoController.destroyPadroes()}" value="Apagar" disabled="false"/>
+                    <button type="button" class="check btn btn-danger" action="#{padraoController.destroyPadroes()}" data-toggle="modal" data-target="#exampleModal" disabled="false"><span>Apagar</span></button>
 
                 </div> 
                 
@@ -31,7 +32,7 @@
                         <thead>
                             <tr>
                                 <th class="no-sort" data-index="0">
-                                    <h:selectBooleanCheckbox onclick="toggleAll()"/>
+                                    <h:selectBooleanCheckbox onclick="toggleAllForPadrao()"/>
                                 </th>
                                 <th data-index="1">Nome</th>
                                 <th data-index="2">Descrição</th>
@@ -44,7 +45,7 @@
                             <ui:repeat value="#{padraoController.items}" var="item">
                                 <tr>
                                     <td style="text-align: center;">
-                                        <h:selectBooleanCheckbox class="check[]" onclick="toggle()" value="#{padraoController.selectedItems[item]}"/>
+                                        <h:selectBooleanCheckbox class="check[]" onclick="toggleForPadrao()" value="#{padraoController.selectedItems[item]}"/>
                                     </td>
                                     <td>
                                         #{item.nome} <h:commandLink action="#{padraoController.prepareView}"> <i class="far fa-eye olho"></i></h:commandLink> <h:commandLink action="#{padraoController.prepareEdit}"><i class="fas fa-pencil-alt olho" ></i></h:commandLink> 
@@ -56,7 +57,7 @@
                                         #{item.utilizadoridUtilizador.nome}
                                     </td>
                                     <td>
-                                        #{produtoController.dateToString(item.dataCriacao)}
+                                        #{padraoController.dateToString(item.dataCriacao)}
                                     </td>
                                     <td>
                                         <h:outputText value=" "/>

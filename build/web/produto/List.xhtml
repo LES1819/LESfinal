@@ -9,27 +9,23 @@
         <ui:define name="title">Produto</ui:define>
         
         <ui:define name="content">
-
-            <h:form>
-                <br/>
-                
-                
-                
-                <div class="row">
+            <br/>
+            <h:form styleClass="jsfcrux\d_list_form">    
+                <div class="col-md-12">
                     <h:outputText value="Lista de Produtos"/>
                 
-                <div class="ml-auto" style="">
+                <div class="btn-group right">
                     <h:commandButton class="check btn btn-primary" action="#{produtoController.prepareCreate}" value="Criar"/>
+
                     <button type="button" class="check btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled="true"><span>Apagar</span></button>
-                  
-                  
-                  </div> 
-                
                 </div>
+                </div>
+                <br/>
+                <br/>
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-
+                <br/>
         <div>
             <table id="example" class="display">
                
@@ -49,9 +45,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ui:repeat value="#{produtoController.getItemsListemp()}" var="item">
+                    <ui:repeat value="#{produtoController.getItemsListemp()}"  var="item">
                         <tr>
-                            <td style="text-align: center;">
+                            <td class="text-center">
                                 <h:selectBooleanCheckbox class="check[]" onclick="toggleproduto()" value="#{produtoController.selectedItems[item]}"/>
                             </td>
                             <td>

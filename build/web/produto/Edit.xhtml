@@ -11,47 +11,50 @@
             <h:outputText value="#{bundle.EditProdutoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <br/>
             <div class="row">
-            <h:link outcome="/produto/List" value="Lista de produtos"></h:link><i class="fa fa-arrow-right seta"></i> Editar Produto: #{produtoController.selected.nome}
-            </div>
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <div class="row tabela">
-                <h:form class="width">
+                <div class="col-lg-1"></div>
+                <div>
+                    <div class="row tabela">
+                        <h:link outcome="/produto/List" value="Lista de Produto"/> <i class="fa fa-arrow-right seta"></i> Editar Produto: #{produtoController.selected.nome}
+                        <h:form class="width">
+                            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
 
+                            <div class="row form-group row ajustar_caixas2">
+                                <h:outputLabel value="#{bundle.CreateProdutoLabel_nome} (Obrigatório)"  for="StaticText" class="col-md-2 outputlabelstyle"/>
+                                <div class="col desc">
+                                    <h:inputText class="form-control col-md-6 sombrinha" id="StaticText" value="#{produtoController.selected.nome}"  title="#{bundle.EditProdutoTitle_nome}" a:placeholder="Insira Nome aqui"/>
+                                </div>
+                            </div>
 
-                    <div class="row form-group row ajustar_caixas2">
-                        <h:outputLabel value="#{bundle.CreateProdutoLabel_nome} (Obrigatório)" for="StaticText" class="col-md-2"/>
-                        <div class="col desc">
-                            <h:inputText class="form-control" id="StaticText" value="#{produtoController.selected.nome}"  title="#{bundle.CreateProdutoTitle_nome}" a:placeholder="Insira Nome aqui"/>
-                        </div>
+                            <div class="row form-group row ajustar_caixas2 style60">
+                                <h:outputLabel for="inputDescricao" value="Descrição:"  class="col-md-2 outputlabelstyle"/>
+                                <div class="col desc style100">
+                                    <h:inputTextarea class="form-control style100 sombrinha" id="inputDescricao" rows="3" value="#{produtoController.selected.descricao}" a:placeholder="Insira a Descrição aqui"/>
+                                </div>
+
+                            </div>                    
+                    <div>
+                            <div class="row form-group row ajustar_caixas2">
+                                <h:outputLabel  value="Tipo:"  class="col-md-2 outputlabelstyle"/>
+                                <h:selectOneMenu value = "#{produtoController.selected.tipo}"> 
+                                    <f:selectItem itemValue = "Entrada" itemLabel = "Entrada" /> 
+                                    <f:selectItem itemValue = "Saída" itemLabel = "Saída" /> 
+                                    <f:selectItem itemValue = "Entrada e Saída" itemLabel = "Entrada e Saída" /> 
+                                </h:selectOneMenu>                                
+                            </div>
+                            
+                            <div class="btn-group right">
+                                    <h:commandButton type="submit" class="btn btn-primary" value="Confirmar" action="#{produtoController.update()}"/>
+                                    <h:button class="check btn btn-danger" outcome="/produto/List" value="Cancelar"/>
+                            </div>
                     </div>
 
-                    <div class="row form-group row ajustar_caixas2" style="height: 50%">
-                        <h:outputLabel for="inputDescricao" value="Descrição:" class="col-md-2"/>
-                        <div class="col desc"  style="height: 100%">
-                            <h:inputTextarea class="form-control" style="height: 100%" id="inputDescricao" rows="3" value="#{produtoController.selected.descricao}" a:placeholder="Insira a Descrição aqui"/>
-                        </div>
 
-                    </div>   
 
-                    <div class="row form-group row ajustar_caixas2">
-                        <h:outputLabel  value="Tipo:"  class="col-md-2"/>
-                        <h:selectOneMenu value = "#{produtoController.selected.tipo}"> 
-                            <f:selectItem itemValue = "Entrada" itemLabel = "Entrada" /> 
-                            <f:selectItem itemValue = "Saída" itemLabel = "Saída" /> 
-                            <f:selectItem itemValue = "Entrada e Saída" itemLabel = "Entrada e Saída" /> 
-                        </h:selectOneMenu> 	
+                        </h:form>
                     </div>
 
-                    <div class="btn-group right">                       
-                        <h:commandButton type="submit" class="btn btn-primary" value="Confirmar" action="#{produtoController.update()}"/>         
-                        <h:button class="check btn btn-danger" outcome="/produto/List" value="Cancelar"/>                              
-                    </div>
-
-                </h:form>
+                </div>
             </div>
         </ui:define>
     </ui:composition>

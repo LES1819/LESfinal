@@ -4,8 +4,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 2/abr/2019, 14:32:57
-    Author     : samuel
 */
 .largura_nav{
     width: 200px;
@@ -96,7 +94,7 @@ and open the template in the editor.
 .tabela{
     margin-top: 4%;
     height: 60%;
-    width: 74.1%; 
+    width: 60; 
     position: fixed;
     <!--overflow: scroll;-->
     border: 5px solid rgba(100, 100, 100, 0.5);
@@ -168,7 +166,7 @@ td,tr{
 
 .row.tabela{
     margin-top: 1%;
-    width: 100%;
+    width: 85%;
 }
 
 .anda_esquerda{
@@ -177,7 +175,7 @@ td,tr{
 
 .col-md-2 {
     text-align: left;
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .dropdown-toggle::before {
@@ -188,7 +186,12 @@ td,tr{
 .desc{
     width:80%
 }
-.footer {bottom: 0; width: 100%; left: 0;}
+.footer {
+    position: fixed;
+    bottom: 0; 
+    width: 100%;
+    left: 0;
+}
 
 .right {
     float:right;
@@ -211,7 +214,11 @@ td,tr{
 }
 
 .width{
-    width: 75%;
+    width: 90%;
+}
+
+.alert{
+    display: none;
 }
 
 html, body {
@@ -239,8 +246,127 @@ html, body {
     padding-left: 50px;
 }
 
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+} 
+
+.seta{
+    margin-top:0.15%;
+    padding-left: 0.3%;
+    padding-right: 0.3%;
+}
+
+.olho{
+    padding-left: 5%;
+}
+
+.dataTableText{
+    padding-left: 5%;
+}
+
+.dataTable2{
+   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+   width: 80%!important;
+   margin-top:1%!important;
+   
+}
+
+.fa-times {
+  color: red;
+}
+
+.outputtextstyle{
+    font-weight: normal;
+}
+
+.outputlabelstyle{
+    font-weight:bold;
+}
+.flexcontainer {
+   display: flex;
+   flex-direction: row;
+}
+
+.datatablew{
+    width: 100%!important;
+}
+
+.datatablew2{
+    width: 90%!important;
+}
+
+div.container {
+        width: 80%;
+    }
+
+.td{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+    
+#example td{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.overflow-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.dataTables_wrapper {
+  margin: 0 auto;
+  width: 97%;
+}
+
+.style60{
+    height: 60%!important;
+}
+
+.style100{
+    height: 100%!important;
+}
+
+.sombrinha{
+    box-shadow: 0 8px 6px -6px black!important;
+}
+
 .seta{
     margin-top:3px;
     padding-left: 4px;
     padding-right: 4px;
+}
+
+.margens{
+   padding-right: 10%;
+   padding-left: 10%;  
+}
+
+.boxes{
+    margin-top:1%; 
+    width: 78%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+
+.espacamento{
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.tabela{
+    padding-left: 20%;
 }

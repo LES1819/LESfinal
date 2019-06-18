@@ -10,35 +10,20 @@
             <h:outputText value="#{bundle.ListPapelTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+            <br/>         
             <h:form styleClass="jsfcrud_list_form">
-                <br/>
-                <div class="row">
-                <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/><i class="fa fa-arrow-right seta"></i>Associar Papéis à Atividade: #{atividadeController.selected.nome}
-            </div>
-                <div class="btn-group right">
-
-
-                    <div class="btn-group mr-2 distancia_top_left">
-                        <div class="btn-group dropleft" role="group">
-                            <div class="dropdown-menu">
-                                <!-- Dropdown menu links -->
-
-                                <div class="col">
-                                    <button name="tipo" type="submit" class="dropdown-item" >drop</button>
-                                </div>
-
-                            </div>
-                        </div>
+                <div class="col-md-12">
+                <h:link outcome="/atividade/List" value="Lista de Atividades"/><i class="fa fa-arrow-right seta"></i> <h:link outcome="/atividade/View" value="Ver Atividade: #{atividadeController.selected.nome}"/><i class="fa fa-arrow-right seta"></i>Associar Papéis à Atividade: #{atividadeController.selected.nome}                       
+                    <div class="btn-group right">                       
                         <h:commandLink action="#{papelController.associateAllPapers(0)}"><button class="btn btn-primary" disabled="true">Associar</button> </h:commandLink>                                
                     </div>                               
                 </div>
                 <br/>
-                
-               
-                
+                <br/>
+                <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <br/>
                 <div>
                     <table id="example" class="display">
 
@@ -79,8 +64,10 @@
                         </tbody>
                     </table>
                 </div>
-                
+                <div class="col-md-12">
                 <h:button class="check btn btn-primary" outcome="/atividade/View" value="Voltar"/>
+                </div>
+                
             </h:form>
             <h:outputScript library="javascript" name="checkboxes.js"/>
             <h:outputScript library="javascript" name="filterAssociatePapers.js"/>

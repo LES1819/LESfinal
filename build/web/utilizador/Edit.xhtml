@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -12,7 +13,8 @@
         <ui:define name="content">
             <br/>
             <div class="row">
-                <h:link outcome="/utilizador/List" value="Lista de utilizadores"/><i class="fa fa-arrow-right seta"></i>Editar
+                
+                <h:link outcome="/utilizador/List" value="Lista de utilizadores"/><i class="fa fa-arrow-right seta"></i>Editar Produto: #{utilizadorController.selected.nome}
             </div>
             <div class="row tabela">
                 <h:form class="width">
