@@ -1,12 +1,14 @@
 package jsf;
 
 //import com.sun.xml.internal.ws.util.StringUtils;
+import static com.journaldev.jsf.util.SessionUtils.getUserId;
 import jpa.entities.Frase;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.session.FraseFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +27,9 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jpa.entities.Agrupamento;
 import jpa.entities.AgrupamentohasFrase;
 import jpa.entities.AgrupamentohasFrasePK;
@@ -43,6 +48,8 @@ public class FraseController implements Serializable {
     private DataModel itemsNotAssociated =  null;
     @EJB
     private jpa.session.FraseFacade ejbFacade;
+    @EJB
+    private jpa.session.UtilizadorFacade user_facade;
     @EJB
     private AgrupamentohasFraseFacade agrupamentohasFraseFacade;
     private PaginationHelper pagination;
@@ -68,7 +75,17 @@ public class FraseController implements Serializable {
     boolean order_dest = true, order_data = true, order_sujeito = true, order_verbo = true;
     
     private AgrupamentohasFrase association;
+    
+    private String idUser;
 
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+    
     public DataModel getItems_possible() {
         return items_possible;
     }
@@ -361,10 +378,10 @@ public class FraseController implements Serializable {
     private FraseFacade getFacade() {
         return ejbFacade;
     }
-
+    
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(10000000) {
 
                 @Override
                 public int getItemsCount() {
@@ -382,6 +399,7 @@ public class FraseController implements Serializable {
 
     public String prepareList() {
         recreateModel();
+        recreatePagination();
         return "List";
     }
 
@@ -390,20 +408,47 @@ public class FraseController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
+    
+    public String prepareViewPosVerbo() {
+        current = (Frase) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return "/frase/View";
+    }
+    
+    private Utilizador getIdUserNome(){
+        List<Utilizador> u = user_facade.alreadyExistsnome(idUser);
+        Utilizador result = null;
+        for(Utilizador util: u){
+            result = util;
+        }
+        return result;
+    }
 
     public String prepareCreate() {
         current = new Frase();
         current.setIdFrase(0);
+        utilizador = new Utilizador();
+        utilizador.setIdUtilizador(Integer.parseInt(getUserId()));
+        current.setUtilizadoridUtilizador(utilizador);
+        
+        //current.setUtilizadoridUtilizador(getIdUserNome());
         current.setDatCriacao(new Date());
         current.setDataRealizacao(""+new Date());
         selectedItemIndex = -1;
         return "Create";
     }
 
+    
+    public String dateToString(Date date){
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return dt1.format(date);
+    }
+    
     public String create() {
+        recreateModel();
+        recreatePagination();
         try {
             getFacade().create(current);
-            items = getPagination().createPageDataModel();
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("FraseCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -633,11 +678,13 @@ public class FraseController implements Serializable {
     }
     
     public String prepareAssociate(Agrupamento agrup){
+       selectedItems = new HashMap<>();
+        frasesOnList = new ArrayList<>();
         current = new Frase();
         selectedItemIndex= -1;
         agrupamento = agrup;
         utilizador = new Utilizador();
-        utilizador.setIdUtilizador(1);
+        utilizador.setIdUtilizador(Integer.parseInt(getUserId()));
         current.setUtilizadoridUtilizador(utilizador);
         prepareItemsPossible(agrup.getIdAgrupamento());
             return "AssociarFrases";
