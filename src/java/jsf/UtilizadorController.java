@@ -158,7 +158,7 @@ public class UtilizadorController implements Serializable {
                 Integer id = getFacade().findID(nome);
                 HttpSession session = SessionUtils.getSession();
                 session.setAttribute("username", nome);
-                session.setAttribute("idUtilizador", id);
+                session.setAttribute("userid", Integer.toString(id));
                 return "index";
             } else {
                 FacesContext.getCurrentInstance().addMessage(
