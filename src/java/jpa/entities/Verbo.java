@@ -127,7 +127,8 @@ public class Verbo implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.entities.Verbo[ verboPK=" + verboPK + " ]";
+        //return "jpa.entities.Verbo[ verboPK=" + verboPK + " ]";
+        return ""+verboPK;
     }
 
 }
